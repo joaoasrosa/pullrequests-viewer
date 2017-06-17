@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+    <UserSecretsId>aspnet-PullRequestsViewer.WebApp-2EBA649D-7E58-4A37-9486-28B3633884B8</UserSecretsId>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0-preview2-25310" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview2-25310" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview1-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
+    <ProjectReference Include="..\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+  </ItemGroup>
+
+</Project>
