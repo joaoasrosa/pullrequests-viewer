@@ -25,7 +25,6 @@ namespace PullRequestsViewer.WebApp.Controllers
             if (!_credentialsRepository.IsUserSetted())
                 return RedirectToAction("Login");
 
-            await _pullRequest.GetAll();
             return View();
         }
 

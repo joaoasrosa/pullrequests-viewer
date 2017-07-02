@@ -24,7 +24,12 @@ Task("Restore")
     .Does(() => {
 	    var settings = new DotNetCoreRestoreSettings
 		{
-			Sources = new[] {"https://api.nuget.org/v3/index.json", "https://dotnet.myget.org/F/aspnetcore-ci-dev/api/v3/index.json"},
+			Sources = new[] 
+			{
+				"https://api.nuget.org/v3/index.json", 
+				"https://dotnet.myget.org/F/aspnetcore-ci-dev/api/v3/index.json", 
+				"https://www.myget.org/F/aspnet-contrib/api/v3/index.json"
+			},
 			PackagesDirectory = packagesDir,
 			DisableParallel = false
 		};
@@ -53,6 +58,7 @@ Task("Test")
 		};
 
         DotNetCoreTest("./tests/PullRequestsViewer.WebApp.Tests", settings);
+        DotNetCoreTest("./tests/PullRequestsViewer.GitHub.Tests", settings);
     });
 
 Task("Publish")
