@@ -2,37 +2,29 @@
 using System.Threading.Tasks;
 
 using Octokit;
-using Octokit.Internal;
 
 using PullRequestsViewer.Domain;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
 
-using Repository=PullRequestsViewer.Domain.Repository;
+using Repository = PullRequestsViewer.Domain.Repository;
 
 namespace PullRequestsViewer.GitHub
 {
     public class RepositoryRepository : IRepositoryRepository
     {
-        private readonly ICredentialsRepository _credentialsRepository;
+        private readonly IGitHubClient _gitHubClient;
 
-        public RepositoryRepository(ICredentialsRepository credentialsRepository)
+        public RepositoryRepository(IGitHubClient gitHubClient)
         {
-            _credentialsRepository = credentialsRepository;
+            _gitHubClient = gitHubClient;
         }
 
         public async Task<IReadOnlyList<Repository>> GetAll(Organisation organisation)
         {
-            InMemoryCredentialStore credentials = new InMemoryCredentialStore(
-                new Credentials(_credentialsRepository.User.Username,
-                    _credentialsRepository.User.Password));
-            GitHubClient client = new GitHubClient(
-                new ProductHeaderValue("PullRequestsViewer"),
-                credentials);
+            var repositories = await _gitHubClient.Repository.GetAllForOrg(organisation.Name);
 
-            var repositories = await client.Repository.GetAllForOrg(organisation.Name);
-
-            return repositories.ConvertTo();
+            return repositories.ConvertToDomain();
         }
     }
 }

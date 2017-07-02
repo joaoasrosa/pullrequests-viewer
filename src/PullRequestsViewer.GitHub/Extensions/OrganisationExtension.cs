@@ -9,20 +9,20 @@ namespace PullRequestsViewer.GitHub.Extensions
 {
     internal static class OrganisationExtension
     {
-        internal static IEnumerable<Organisation> ConvertTo(this IEnumerable<Organization> organisations)
+        internal static IEnumerable<Organisation> ConvertToDomain(this IEnumerable<Organization> organisations)
         {
-            if(organisations == null)
+            if (organisations == null)
                 return null;
 
             var readOnlyOrganisations = organisations.ToArray();
             var domainOrganisations = new Organisation[readOnlyOrganisations.Length];
 
-            for(var i = 0;i < readOnlyOrganisations.Length;i++)
+            for (var i = 0; i < readOnlyOrganisations.Length; i++)
             {
                 domainOrganisations[i] = new Organisation
-                                         {
-                                             Name = readOnlyOrganisations[i].Name
-                                         };
+                {
+                    Name = readOnlyOrganisations[i].Name
+                };
             }
 
             return domainOrganisations;
