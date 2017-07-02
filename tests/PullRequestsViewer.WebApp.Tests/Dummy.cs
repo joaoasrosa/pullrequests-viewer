@@ -13,10 +13,10 @@ namespace PullRequestsViewer.WebApp.Tests
             Assert.Equal(".", ".");
         }
 
-        [Fact]
-        public void Assert_False()
-        {
-            Assert.Equal(".", "..");
-        }
+        //[Fact]
+        //public void Assert_False()
+        //{
+        //    Assert.Equal(".", "..");
+        //}
     }
 }
