@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D7A6041B-98F0-418D-80CA-AFEA245FA8F6}"
 EndProject
@@ -14,6 +14,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub", "src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj", "{2E967D8D-8239-4EB1-8B97-96928769A336}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.Domain", "src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj", "{DEABC975-5493-401A-8169-F7589B60C946}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30A4C038-3B03-4AD0-B74D-E967E50F1136}"
+	ProjectSection(SolutionItems) = preProject
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		build.sh = build.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,5 +89,8 @@ Global
 		{A89E678F-D1EB-449F-AE81-001B028FDE14} = {1F3507EC-A748-4B1C-B90D-D212C9A31DC1}
 		{2E967D8D-8239-4EB1-8B97-96928769A336} = {D7A6041B-98F0-418D-80CA-AFEA245FA8F6}
 		{DEABC975-5493-401A-8169-F7589B60C946} = {D7A6041B-98F0-418D-80CA-AFEA245FA8F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83FF9785-8B15-46FE-AE5D-695E08B40BD0}
 	EndGlobalSection
 EndGlobal

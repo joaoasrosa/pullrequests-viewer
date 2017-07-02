@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <UserSecretsId>aspnet-PullRequestsViewer.WebApp-2EBA649D-7E58-4A37-9486-28B3633884B8</UserSecretsId>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
