@@ -14,4 +14,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta3-build3705" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+  </ItemGroup>
+
 </Project>

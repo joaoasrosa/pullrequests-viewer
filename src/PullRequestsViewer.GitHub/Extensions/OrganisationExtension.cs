@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using Octokit;
 
@@ -9,19 +8,18 @@ namespace PullRequestsViewer.GitHub.Extensions
 {
     internal static class OrganisationExtension
     {
-        internal static IEnumerable<Organisation> ConvertToDomain(this IEnumerable<Organization> organisations)
+        internal static IReadOnlyList<Organisation> ConvertToDomain(this IReadOnlyList<Organization> organisations)
         {
             if (organisations == null)
                 return null;
 
-            var readOnlyOrganisations = organisations.ToArray();
-            var domainOrganisations = new Organisation[readOnlyOrganisations.Length];
+            var domainOrganisations = new Organisation[organisations.Count];
 
-            for (var i = 0; i < readOnlyOrganisations.Length; i++)
+            for (var i = 0; i < organisations.Count; i++)
             {
                 domainOrganisations[i] = new Organisation
                 {
-                    Name = readOnlyOrganisations[i].Name
+                    Name = organisations[i].Name
                 };
             }
 

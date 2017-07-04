@@ -2,7 +2,6 @@
 
 var target = Argument("target", "Default");
 var outputDir = "./artifacts/";
-var packagesDir = "./packages/";
 var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csproj";
 var configuration = "Release";
 
@@ -11,10 +10,6 @@ Task("Clean")
         if (DirectoryExists(outputDir))
         {
             DeleteDirectory(outputDir, recursive:true);
-        }
-		if (DirectoryExists(packagesDir))
-        {
-            DeleteDirectory(packagesDir, recursive:true);
         }
 
         CreateDirectory(outputDir);
@@ -30,7 +25,6 @@ Task("Restore")
 				"https://dotnet.myget.org/F/aspnetcore-ci-dev/api/v3/index.json", 
 				"https://www.myget.org/F/aspnet-contrib/api/v3/index.json"
 			},
-			PackagesDirectory = packagesDir,
 			DisableParallel = false
 		};
 
