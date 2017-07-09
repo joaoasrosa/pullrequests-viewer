@@ -7,7 +7,7 @@ using PullRequestsViewer.Domain;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
 
-using Repository = PullRequestsViewer.Domain.Repository;
+using Repository=PullRequestsViewer.Domain.Repository;
 
 namespace PullRequestsViewer.GitHub
 {

@@ -10,17 +10,17 @@ namespace PullRequestsViewer.GitHub.Extensions
     {
         internal static IReadOnlyList<Organisation> ConvertToDomain(this IReadOnlyList<Organization> organisations)
         {
-            if (organisations == null)
+            if(organisations == null)
                 return null;
 
             var domainOrganisations = new Organisation[organisations.Count];
 
-            for (var i = 0; i < organisations.Count; i++)
+            for(var i = 0;i < organisations.Count;i++)
             {
                 domainOrganisations[i] = new Organisation
-                {
-                    Name = organisations[i].Name
-                };
+                                         {
+                                             Name = organisations[i].Name
+                                         };
             }
 
             return domainOrganisations;

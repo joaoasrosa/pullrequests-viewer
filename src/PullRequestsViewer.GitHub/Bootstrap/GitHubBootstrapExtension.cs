@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+
 using Octokit;
 using Octokit.Internal;
+
 using PullRequestsViewer.Domain.Interfaces;
 
 namespace PullRequestsViewer.GitHub.Bootstrap
@@ -15,7 +17,7 @@ namespace PullRequestsViewer.GitHub.Bootstrap
             {
                 var credentialsRepository = serviceProvider.GetService<ICredentialsRepository>();
 
-                if (credentialsRepository.User == null)
+                if(credentialsRepository.User == null)
                     return null;
 
                 return new InMemoryCredentialStore(new Credentials(credentialsRepository.User.Username,
@@ -26,7 +28,7 @@ namespace PullRequestsViewer.GitHub.Bootstrap
             {
                 var credentialStore = serviceProvider.GetService<ICredentialStore>();
 
-                if (credentialStore == null)
+                if(credentialStore == null)
                     return null;
 
                 return new GitHubClient(new ProductHeaderValue("PullRequestsViewer"), credentialStore);

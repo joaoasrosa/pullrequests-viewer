@@ -8,18 +8,18 @@ namespace PullRequestsViewer.GitHub.Extensions
     {
         internal static IReadOnlyList<Repository> ConvertToDomain(this IReadOnlyList<Octokit.Repository> repositories)
         {
-            if (repositories == null)
+            if(repositories == null)
                 return null;
 
             var domainRepositories = new Repository[repositories.Count];
 
-            for (var i = 0; i < repositories.Count; i++)
+            for(var i = 0;i < repositories.Count;i++)
             {
                 domainRepositories[i] = new Repository
-                {
-                    Name = repositories[i].Name,
-                    OwnerLogin = repositories[i].Owner.Login
-                };
+                                        {
+                                            Name = repositories[i].Name,
+                                            OwnerLogin = repositories[i].Owner.Login
+                                        };
             }
 
             return domainRepositories;

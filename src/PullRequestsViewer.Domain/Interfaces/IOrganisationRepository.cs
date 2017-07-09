@@ -11,8 +11,7 @@ namespace PullRequestsViewer.Domain.Interfaces
         /// <summary>
         /// Returns the user organisations.
         /// </summary>
-        /// <param name="username">The username.</param>
         /// <returns>The organisations which the user have access.</returns>
-        Task<IReadOnlyList<Organisation>> GetOrganisationsAsync(string username);
+        Task<IReadOnlyList<Organisation>> GetOrganisationsAsync();
     }
 }

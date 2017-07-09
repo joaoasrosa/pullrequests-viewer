@@ -28,9 +28,8 @@ namespace PullRequestsViewer.GitHub
         /// <summary>
         /// Returns the user organisations.
         /// </summary>
-        /// <param name="username">The username.</param>
         /// <returns>The organisations which the user have access.</returns>
-        public async Task<IReadOnlyList<Organisation>> GetOrganisationsAsync(string username)
+        public async Task<IReadOnlyList<Organisation>> GetOrganisationsAsync()
         {
             var organisations = await _gitHubClient.Organization.GetAllForCurrent();
 
