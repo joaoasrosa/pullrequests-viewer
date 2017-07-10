@@ -6,8 +6,8 @@ using Octokit;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
 
-using PullRequest=PullRequestsViewer.Domain.PullRequest;
-using Repository=PullRequestsViewer.Domain.Repository;
+using PullRequest = PullRequestsViewer.Domain.PullRequest;
+using Repository = PullRequestsViewer.Domain.Repository;
 
 namespace PullRequestsViewer.GitHub
 {
@@ -27,16 +27,12 @@ namespace PullRequestsViewer.GitHub
             _gitHubClient = gitHubClient;
         }
 
-        /// <summary>
-        /// Returns all open Pull Requests for the given Repositories.
-        /// </summary>
-        /// <param name="repositories">The Repositories.</param>
-        /// <returns>The open Pull Requests.</returns>
+        /// <inheritdoc />
         public async Task<IReadOnlyList<PullRequest>> GetAll(IReadOnlyList<Repository> repositories)
         {
             var pullRequests = new List<Octokit.PullRequest>();
 
-            foreach(var repository in repositories)
+            foreach (var repository in repositories)
             {
                 pullRequests.AddRange(
                     await _gitHubClient.PullRequest.GetAllForRepository(repository.OwnerLogin, repository.Name));

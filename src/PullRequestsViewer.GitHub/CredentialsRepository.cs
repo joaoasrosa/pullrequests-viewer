@@ -8,24 +8,16 @@ namespace PullRequestsViewer.GitHub
     /// </summary>
     public class CredentialsRepository : ICredentialsRepository
     {
-        /// <summary>
-        /// The user.
-        /// </summary>
+        /// <inheritdoc />
         public User User { get; private set; }
 
-        /// <summary>
-        /// Verify if the user is setted.
-        /// </summary>
-        /// <returns>True if the user was setted, false otherwise.</returns>
+        /// <inheritdoc />
         public bool IsUserSetted()
         {
             return User != null;
         }
 
-        /// <summary>
-        /// Set the user.
-        /// </summary>
-        /// <param name="user">The user to set.</param>
+        /// <inheritdoc />
         public void SetUser(User user)
         {
             User = user;

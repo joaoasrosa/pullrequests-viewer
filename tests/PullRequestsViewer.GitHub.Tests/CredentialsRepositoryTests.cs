@@ -1,6 +1,6 @@
 ﻿using PullRequestsViewer.Domain;
 using PullRequestsViewer.GitHub.Tests.Builders;
-using  PullRequestsViewer.GitHub;
+using PullRequestsViewer.GitHub;
 
 using FluentAssertions;
 

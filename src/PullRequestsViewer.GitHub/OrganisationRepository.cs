@@ -25,10 +25,7 @@ namespace PullRequestsViewer.GitHub
             _gitHubClient = gitHubClient;
         }
 
-        /// <summary>
-        /// Returns the user organisations.
-        /// </summary>
-        /// <returns>The organisations which the user have access.</returns>
+        /// <inheritdoc />
         public async Task<IReadOnlyList<Organisation>> GetOrganisationsAsync()
         {
             var organisations = await _gitHubClient.Organization.GetAllForCurrent();
