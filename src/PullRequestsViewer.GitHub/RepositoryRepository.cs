@@ -28,7 +28,7 @@ namespace PullRequestsViewer.GitHub
         }
 
         /// <inheritdoc />
-        public async Task<IReadOnlyList<Repository>> GetAll(Organisation organisation)
+        public async Task<IReadOnlyList<Repository>> GetAllAsync(Organisation organisation)
         {
             var repositories = await _gitHubClient.Repository.GetAllForOrg(organisation.Name);
 

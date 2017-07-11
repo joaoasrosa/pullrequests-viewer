@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Octokit;
 
-namespace PullRequestsViewer.GitHub.Tests.Builders
+namespace PullRequestsViewer.GitHub.Tests.Builders.GitHub
 {
     internal static class OrganizationBuilder
     {

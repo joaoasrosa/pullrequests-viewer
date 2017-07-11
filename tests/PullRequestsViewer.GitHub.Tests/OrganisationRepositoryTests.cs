@@ -2,8 +2,7 @@
 using Moq;
 using Octokit;
 using PullRequestsViewer.Domain;
-using PullRequestsViewer.GitHub.Tests.Builders;
-using System.Collections.Generic;
+using PullRequestsViewer.GitHub.Tests.Builders.GitHub;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;

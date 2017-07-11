@@ -5,6 +5,6 @@ namespace PullRequestsViewer.Domain.Interfaces
 {
     public interface IRepositoryRepository
     {
-        Task<IReadOnlyList<Repository>> GetAll(Organisation organisation);
+        Task<IReadOnlyList<Repository>> GetAllAsync(Organisation organisation);
     }
 }

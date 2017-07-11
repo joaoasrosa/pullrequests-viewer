@@ -1,9 +1,5 @@
-﻿using PullRequestsViewer.Domain;
-using PullRequestsViewer.GitHub.Tests.Builders;
-using PullRequestsViewer.GitHub;
-
-using FluentAssertions;
-
+﻿using FluentAssertions;
+using PullRequestsViewer.GitHub.Tests.Builders.Domain;
 using Xunit;
 
 namespace PullRequestsViewer.GitHub.Tests

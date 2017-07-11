@@ -1,6 +1,6 @@
 ﻿using PullRequestsViewer.Domain;
 
-namespace PullRequestsViewer.GitHub.Tests.Builders
+namespace PullRequestsViewer.GitHub.Tests.Builders.Domain
 {
     internal static class UserBuilder
     {

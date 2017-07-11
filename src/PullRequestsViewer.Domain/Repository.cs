@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        // TODO: porabably refactor it...
+        // TODO: probably refactor it...
         public string OwnerLogin { get; set; }
     }
 }

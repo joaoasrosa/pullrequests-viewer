@@ -1,6 +1,9 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 using Octokit;
-using PullRequestsViewer.GitHub.Tests.Builders;
+using PullRequestsViewer.GitHub.Tests.Builders.Domain;
+using PullRequestsViewer.GitHub.Tests.Builders.GitHub;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,13 +24,34 @@ namespace PullRequestsViewer.GitHub.Tests
         }
 
         [Fact]
-        public async Task GetOrganisationsAsync_Always_CallsGitHubRepositoryClient()
+        public async Task GetAllAsync_Always_CallsGitHubRepositoryClient()
         {
             var organisation = OrganisationBuilder.GenerateValidOrganisation();
 
-            await _sut.GetAll(organisation);
+            await _sut.GetAllAsync(organisation);
 
             _repositoriesClientMock.Verify(x => x.GetAllForOrg(organisation.Name), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetAllsAsync_IfGetAllForOrgReturnsNull_ReturnsNull()
+        {
+            _repositoriesClientMock.Setup(x => x.GetAllForOrg(It.IsAny<string>())).ReturnsAsync(RepositoryBuilder.GenerateNullRepositories());
+
+            var result = await _sut.GetAllAsync(OrganisationBuilder.GenerateValidOrganisation());
+
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetAllsAsync_IfGetAllForOrgReturnsRepositories_ReturnsRepositories()
+        {
+            var repositories = RepositoryBuilder.GenerateValidRepositories();
+            _repositoriesClientMock.Setup(x => x.GetAllForOrg(It.IsAny<string>())).ReturnsAsync(repositories);
+
+            var result = await _sut.GetAllAsync(OrganisationBuilder.GenerateValidOrganisation());
+
+            result.ShouldBeEquivalentTo(repositories.Select(x => new Domain.Repository { Name = x.Name }));
         }
     }
 }
