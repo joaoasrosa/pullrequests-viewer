@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-using Octokit;
-
+﻿using Octokit;
 using PullRequestsViewer.Domain;
+using System.Collections.Generic;
 
 namespace PullRequestsViewer.GitHub.Extensions
 {

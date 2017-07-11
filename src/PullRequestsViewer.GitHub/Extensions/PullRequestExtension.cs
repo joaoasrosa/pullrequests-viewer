@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using PullRequestsViewer.Domain;
+﻿using PullRequestsViewer.Domain;
+using System.Collections.Generic;
 
 namespace PullRequestsViewer.GitHub.Extensions
 {

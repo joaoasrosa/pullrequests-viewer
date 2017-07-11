@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Octokit;
-
+﻿using Octokit;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using PullRequest = PullRequestsViewer.Domain.PullRequest;
 using Repository = PullRequestsViewer.Domain.Repository;
 
@@ -28,7 +25,7 @@ namespace PullRequestsViewer.GitHub
         }
 
         /// <inheritdoc />
-        public async Task<IReadOnlyList<PullRequest>> GetAll(IReadOnlyList<Repository> repositories)
+        public async Task<IReadOnlyList<PullRequest>> GetAllAsync(IReadOnlyList<Repository> repositories)
         {
             var pullRequests = new List<Octokit.PullRequest>();
 

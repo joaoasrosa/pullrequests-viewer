@@ -13,6 +13,6 @@ namespace PullRequestsViewer.Domain.Interfaces
         /// </summary>
         /// <param name="repositories">The Repositories.</param>
         /// <returns>The open Pull Requests.</returns>
-        Task<IReadOnlyList<PullRequest>> GetAll(IReadOnlyList<Repository> repositories);
+        Task<IReadOnlyList<PullRequest>> GetAllAsync(IReadOnlyList<Repository> repositories);
     }
 }

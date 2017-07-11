@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Octokit;
-
+﻿using Octokit;
 using PullRequestsViewer.Domain;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
-
-using Repository=PullRequestsViewer.Domain.Repository;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Repository = PullRequestsViewer.Domain.Repository;
 
 namespace PullRequestsViewer.GitHub
 {

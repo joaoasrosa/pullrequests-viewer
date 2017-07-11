@@ -34,9 +34,10 @@ namespace PullRequestsViewer.GitHub.Tests
         }
 
         [Fact]
-        public async Task GetAllsAsync_IfGetAllForOrgReturnsNull_ReturnsNull()
+        public async Task GetAllAsync_IfGetAllForOrgReturnsNull_ReturnsNull()
         {
-            _repositoriesClientMock.Setup(x => x.GetAllForOrg(It.IsAny<string>())).ReturnsAsync(RepositoryBuilder.GenerateNullRepositories());
+            _repositoriesClientMock.Setup(x => x.GetAllForOrg(It.IsAny<string>()))
+                .ReturnsAsync(Builders.GitHub.RepositoryBuilder.GenerateNullRepositories());
 
             var result = await _sut.GetAllAsync(OrganisationBuilder.GenerateValidOrganisation());
 
@@ -44,9 +45,9 @@ namespace PullRequestsViewer.GitHub.Tests
         }
 
         [Fact]
-        public async Task GetAllsAsync_IfGetAllForOrgReturnsRepositories_ReturnsRepositories()
+        public async Task GetAllAsync_IfGetAllForOrgReturnsRepositories_ReturnsRepositories()
         {
-            var repositories = RepositoryBuilder.GenerateValidRepositories();
+            var repositories = Builders.GitHub.RepositoryBuilder.GenerateValidRepositories();
             _repositoriesClientMock.Setup(x => x.GetAllForOrg(It.IsAny<string>())).ReturnsAsync(repositories);
 
             var result = await _sut.GetAllAsync(OrganisationBuilder.GenerateValidOrganisation());
