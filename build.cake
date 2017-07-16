@@ -1,22 +1,41 @@
 #addin "Cake.Docker"
+#tool "nuget:?package=GitVersion.CommandLine"
 
-var target = Argument("target", "Default");
-var outputDir = "./artifacts/";
+var nugetApiKeyArg = Argument<string>("nugetApiKey", "");
+var targetArg = Argument<string>("target", "Default");
+var artifactsDir = "./artifacts/";
+var publishDir = "./publish/";
+var solutionPath = "./PullRequestsViewer.sln";
 var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csproj";
+var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
+var publishedNuspecFile = publishDir + "PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 var configuration = "Release";
+var testProjects = new []
+{
+	"./tests/PullRequestsViewer.WebApp.Tests",
+	"./tests/PullRequestsViewer.GitHub.Tests"
+};
 
 Task("Clean")
     .Does(() => {
-        if (DirectoryExists(outputDir))
+        if (DirectoryExists(publishDir))
         {
-            DeleteDirectory(outputDir, recursive:true);
+            DeleteDirectory(publishDir, recursive:true);
         }
 
-        CreateDirectory(outputDir);
+        CreateDirectory(publishDir);
+
+		if (DirectoryExists(artifactsDir))
+        {
+            DeleteDirectory(artifactsDir, recursive:true);
+        }
+
+        CreateDirectory(artifactsDir);
     });
 
 Task("Restore")
-    .Does(() => {
+    .IsDependentOn("Clean")
+	.Does(() => {
 	    var settings = new DotNetCoreRestoreSettings
 		{
 			Sources = new[] 
@@ -31,16 +50,26 @@ Task("Restore")
         DotNetCoreRestore("./", settings);
     });
 
-Task("Build")
-    .IsDependentOn("Clean")
+Task("GitVersion")
     .IsDependentOn("Restore")
+    .Does(() =>
+	{
+		var result = GitVersion(new GitVersionSettings {
+			UpdateAssemblyInfo = true
+		});
+
+		Information(result.FullSemVer);
+	});
+
+Task("Build")
+    .IsDependentOn("GitVersion")
     .Does(() => {
 		var settings = new DotNetCoreBuildSettings
 		{
 			Configuration = configuration
 		};
 		
-        DotNetCoreBuild(projectPath, settings);
+        DotNetCoreBuild(solutionPath, settings);
     });
 
 Task("Test")
@@ -48,11 +77,14 @@ Task("Test")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
 		{
-			Configuration = configuration
+			Configuration = configuration,
+			NoBuild = true
 		};
 
-        DotNetCoreTest("./tests/PullRequestsViewer.WebApp.Tests", settings);
-        DotNetCoreTest("./tests/PullRequestsViewer.GitHub.Tests", settings);
+		foreach(var testProject in testProjects)
+        {
+			DotNetCoreTest(testProject, settings);
+		}
     });
 
 Task("Publish")
@@ -61,19 +93,44 @@ Task("Publish")
 	    var settings = new DotNetCorePublishSettings
 		{
 			Configuration = configuration,
-			OutputDirectory = outputDir + "PullRequestsViewer.WebApp/"
+			OutputDirectory = publishDir + "PullRequestsViewer.WebApp/lib"
 		};
 
         DotNetCorePublish(projectPath, settings);
+		CopyFile(nuspecFile, publishedNuspecFile);
     });
 
+Task("CreateNuGet")
+	.IsDependentOn("Publish")
+	.Does(() => {
+		var settings = new NuGetPackSettings 
+		{
+			OutputDirectory = artifactsDir
+		};
+
+		NuGetPack(publishedNuspecFile, settings);
+	});
+
+Task("PushNuGet")
+	.IsDependentOn("CreateNuGet")
+	.Does(() => {
+		var packages = GetFiles(artifactsDir + "*.nupkg");
+		
+		var settings = new NuGetPushSettings {
+			Source = "https://www.nuget.org/api/v2/package",
+			ApiKey = nugetApiKeyArg
+		};
+
+		NuGetPush(packages, settings);
+	});
+
 Task("CreateContainer")
-    .IsDependentOn("Publish")
+    .IsDependentOn("PushNuGet")
     .Does(() => {
 	    Information("TODO: create docker image.");
     });
 
 Task("Default")
-    .IsDependentOn("CreateContainer");
+    .IsDependentOn("Test");
 
-RunTarget(target);
+RunTarget(targetArg);

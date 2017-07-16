@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B55CE421
 		build.cake = build.cake
 		build.ps1 = build.ps1
 		build.sh = build.sh
+		src\PullRequestsViewer.WebApp\PullRequestsViewer.WebApp.nuspec = src\PullRequestsViewer.WebApp\PullRequestsViewer.WebApp.nuspec
 	EndProjectSection
 EndProject
 Global
