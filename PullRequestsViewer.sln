@@ -15,15 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.Domain", "src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj", "{DEABC975-5493-401A-8169-F7589B60C946}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30A4C038-3B03-4AD0-B74D-E967E50F1136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub.Tests", "tests\PullRequestsViewer.GitHub.Tests\PullRequestsViewer.GitHub.Tests.csproj", "{C8C347B6-AC90-4A0A-8C5B-8780E2BB8C84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F53E7105-F9F7-4E1F-AE56-75AF520D26DC}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B55CE421-62A3-43C4-B4BC-D7EDC6AE03E1}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		build.cake = build.cake
 		build.ps1 = build.ps1
 		build.sh = build.sh
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullRequestsViewer.GitHub.Tests", "tests\PullRequestsViewer.GitHub.Tests\PullRequestsViewer.GitHub.Tests.csproj", "{C8C347B6-AC90-4A0A-8C5B-8780E2BB8C84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
