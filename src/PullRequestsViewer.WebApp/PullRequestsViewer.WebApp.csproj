@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0-rtm-26181" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0-rtm-26181" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0-rtm-26181" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0-rtm-26181" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0-rtm-26181" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0-rtm-26339" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0-rtm-26339" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0-rtm-26339" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0-rtm-26339" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0-rtm-26339" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview3-26036" />
   </ItemGroup>
 
