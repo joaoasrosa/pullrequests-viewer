@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PullRequestsViewer.WebApp.Models;
 using PullRequestsViewer.Domain.Interfaces;
+using PullRequestsViewer.Domain;
 
 namespace PullRequestsViewer.WebApp.Controllers
 {
@@ -30,6 +31,22 @@ namespace PullRequestsViewer.WebApp.Controllers
 
         public IActionResult Login()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _credentialsRepository.SetUser(user);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // TODO: error message
+            }
             return View();
         }
 
