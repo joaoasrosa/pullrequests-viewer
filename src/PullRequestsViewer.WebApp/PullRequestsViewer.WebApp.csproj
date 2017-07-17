@@ -8,22 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0-rtm-26339" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0-rtm-26339" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0-rtm-26339" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0-rtm-26339" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0-rtm-26339" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0-rtm-26348" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0-rtm-26348" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0-rtm-26348" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0-rtm-26348" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.0-rtm-26348" />
     <PackageReference Include="Serilog" Version="2.5.1-dev-00869" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview1-final" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0-rtm-26345" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
     <ProjectReference Include="..\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+    <ProjectReference Include="..\PullRequestsViewer.SqlLite\PullRequestsViewer.SqlLite.csproj" />
   </ItemGroup>
 
 </Project>

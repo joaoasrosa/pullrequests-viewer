@@ -7,17 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="4.19.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0-rtm-26348" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170711-01" />
     <PackageReference Include="Moq" Version="4.7.99" />
-    <PackageReference Include="Octokit.Reactive" Version="0.24.1-alpha0001" />
     <PackageReference Include="xunit" Version="2.3.0-beta3-build3705" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta3-build3705" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
-    <ProjectReference Include="..\..\src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+    <ProjectReference Include="..\..\src\PullRequestsViewer.SqlLite\PullRequestsViewer.SqlLite.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,6 +21,7 @@ namespace PullRequestsViewer.GitHub
         public void SetUser(User user)
         {
             User = user;
+            // TODO: valid. We need to get the IGitHubClient again. Probably use a factory...
         }
     }
 }

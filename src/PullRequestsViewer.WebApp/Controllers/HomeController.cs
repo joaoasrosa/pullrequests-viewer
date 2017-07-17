@@ -12,13 +12,13 @@ namespace PullRequestsViewer.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPullRequestRepository _pullRequest;
+        private readonly IRepositoryPersistence _repositoryPersistence;
         private readonly ICredentialsRepository _credentialsRepository;
 
-        public HomeController(ICredentialsRepository credentialsRepository, IPullRequestRepository pullRequest)
+        public HomeController(ICredentialsRepository credentialsRepository, IRepositoryPersistence repositoryPersistence)
         {
             _credentialsRepository = credentialsRepository;
-            _pullRequest = pullRequest;
+            _repositoryPersistence = repositoryPersistence;
         }
 
         public async Task<IActionResult> Index()

@@ -13,7 +13,8 @@ var configuration = "Release";
 var testProjects = new []
 {
 	"./tests/PullRequestsViewer.WebApp.Tests",
-	"./tests/PullRequestsViewer.GitHub.Tests"
+	"./tests/PullRequestsViewer.GitHub.Tests",
+	"./tests/PullRequestsViewer.SqlLite.Tests.Unit"
 };
 
 Task("Clean")
@@ -83,6 +84,7 @@ Task("Test")
 
 		foreach(var testProject in testProjects)
         {
+			Information("Running tests in project " + testProject);
 			DotNetCoreTest(testProject, settings);
 		}
     });

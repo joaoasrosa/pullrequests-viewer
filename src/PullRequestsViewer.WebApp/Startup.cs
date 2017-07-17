@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PullRequestsViewer.GitHub.Bootstrap;
+using PullRequestsViewer.SqlLite.Bootstrap;
 
 namespace PullRequestsViewer.WebApp
 {
@@ -24,6 +21,7 @@ namespace PullRequestsViewer.WebApp
         {
             services.AddMvc();
             services.GitHubBootstrap();
+            services.SqlLiteBootstrap();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +44,8 @@ namespace PullRequestsViewer.WebApp
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.ApplicationServices.InitialiseDatastore();
         }
     }
 }
