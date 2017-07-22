@@ -8,7 +8,7 @@
     <div class="jumbotron">
         <h2>Configuration required</h2>
         <p>You do not have any configured repositories.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Configure repositories</a></p>
+        <p><a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Repository")" role="button">Configure repositories</a></p>
     </div>
 }
 else if (Model.Any())
@@ -25,7 +25,7 @@ else if (Model.Any())
             <tbody>
                 @foreach (var pullRequest in Model)
                 {
-                    <tr>
+                    <tr class="clickable-row" data-href="@pullRequest.HtmlUrl">
                         <td>
                             @Html.Label(pullRequest.Number.ToString())
                         </td>
@@ -41,6 +41,13 @@ else if (Model.Any())
             </tbody>
         </table>
     </div>
+
+    <!-- Remove it after move to reactive implementation. This is bad... So bad baby... -->
+    <script type="text/javascript">
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 30000);
+    </script>
 }
 else
 {

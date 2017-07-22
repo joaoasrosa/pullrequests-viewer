@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.WebApp",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1F3507EC-A748-4B1C-B90D-D212C9A31DC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.WebApp.Tests", "tests\PullRequestsViewer.WebApp.Tests\PullRequestsViewer.WebApp.Tests.csproj", "{A89E678F-D1EB-449F-AE81-001B028FDE14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.WebApp.Tests.Unit", "tests\PullRequestsViewer.WebApp.Tests.Unit\PullRequestsViewer.WebApp.Tests.Unit.csproj", "{A89E678F-D1EB-449F-AE81-001B028FDE14}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub", "src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj", "{2E967D8D-8239-4EB1-8B97-96928769A336}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.Domain", "src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj", "{DEABC975-5493-401A-8169-F7589B60C946}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub.Tests", "tests\PullRequestsViewer.GitHub.Tests\PullRequestsViewer.GitHub.Tests.csproj", "{C8C347B6-AC90-4A0A-8C5B-8780E2BB8C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub.Tests.Unit", "tests\PullRequestsViewer.GitHub.Tests.Unit\PullRequestsViewer.GitHub.Tests.Unit.csproj", "{C8C347B6-AC90-4A0A-8C5B-8780E2BB8C84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F53E7105-F9F7-4E1F-AE56-75AF520D26DC}"
 	ProjectSection(SolutionItems) = preProject

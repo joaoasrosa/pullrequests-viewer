@@ -1,24 +1,25 @@
 ﻿using PullRequestsViewer.Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PullRequestsViewer.GitHub.Extensions
 {
     internal static class RepositoryExtension
     {
-        internal static IReadOnlyList<Repository> ConvertToDomain(this IReadOnlyList<Octokit.Repository> repositories)
+        internal static IReadOnlyList<Repository> ConvertToDomain(this IOrderedEnumerable<Octokit.Repository> repositories)
         {
-            if(repositories == null)
+            if (repositories == null)
                 return null;
 
-            var domainRepositories = new Repository[repositories.Count];
+            var domainRepositories = new Repository[repositories.Count()];
 
-            for(var i = 0;i < repositories.Count;i++)
+            for (var i = 0; i < repositories.Count(); i++)
             {
                 domainRepositories[i] = new Repository
-                                        {
-                                            Name = repositories[i].Name,
-                                            OwnerLogin = repositories[i].Owner.Login
-                                        };
+                {
+                    Name = repositories.ElementAt(i).Name,
+                    OwnerLogin = repositories.ElementAt(i).Owner.Login
+                };
             }
 
             return domainRepositories;

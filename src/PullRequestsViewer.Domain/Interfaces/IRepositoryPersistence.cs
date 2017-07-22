@@ -13,5 +13,11 @@ namespace PullRequestsViewer.Domain.Interfaces
         /// </summary>
         /// <returns>The Repositories.</returns>
         Task<IReadOnlyList<Repository>> GetAllAsync();
+
+        /// <summary>
+        /// Saves the repositories.
+        /// </summary>
+        /// <param name="repositories">The repositories.</param>
+        Task SaveAsync(IReadOnlyList<Repository> repositories);
     }
 }

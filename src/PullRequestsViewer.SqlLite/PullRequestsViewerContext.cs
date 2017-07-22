@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PullRequestsViewer.Domain;
+using System.Threading.Tasks;
 
 namespace PullRequestsViewer.SqlLite
 {
@@ -23,6 +24,11 @@ namespace PullRequestsViewer.SqlLite
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Repository>().HasKey(x => x.Name);
+        }
+
+        async Task IPullRequestsViewerContext.SaveChangesAsync()
+        {
+           await this.SaveChangesAsync();
         }
     }
 }

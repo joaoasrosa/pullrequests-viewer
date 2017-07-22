@@ -3,17 +3,19 @@
 
 var nugetApiKeyArg = Argument<string>("nugetApiKey", "");
 var targetArg = Argument<string>("target", "Default");
+var configurationArg = Argument<string>("configuration", "Debug");
 var artifactsDir = "./artifacts/";
 var publishDir = "./publish/";
 var solutionPath = "./PullRequestsViewer.sln";
 var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csproj";
 var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 var publishedNuspecFile = publishDir + "PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
-var configuration = "Release";
+
+//var testProjects = GetFiles("./tests/**Tests.Unit.csproj");
 var testProjects = new []
 {
-	"./tests/PullRequestsViewer.WebApp.Tests",
-	"./tests/PullRequestsViewer.GitHub.Tests",
+	"./tests/PullRequestsViewer.WebApp.Tests.Unit",
+	"./tests/PullRequestsViewer.GitHub.Tests.Unit",
 	"./tests/PullRequestsViewer.SqlLite.Tests.Unit"
 };
 
@@ -67,7 +69,7 @@ Task("Build")
     .Does(() => {
 		var settings = new DotNetCoreBuildSettings
 		{
-			Configuration = configuration
+			Configuration = configurationArg
 		};
 		
         DotNetCoreBuild(solutionPath, settings);
@@ -78,7 +80,7 @@ Task("Test")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
 		{
-			Configuration = configuration,
+			Configuration = configurationArg,
 			NoBuild = true
 		};
 
@@ -94,7 +96,7 @@ Task("Publish")
     .Does(() => {
 	    var settings = new DotNetCorePublishSettings
 		{
-			Configuration = configuration,
+			Configuration = configurationArg,
 			OutputDirectory = publishDir + "PullRequestsViewer.WebApp/lib"
 		};
 

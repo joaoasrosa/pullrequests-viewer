@@ -16,9 +16,9 @@ namespace PullRequestsViewer.Domain
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// URL.
+        /// The HTML URL.
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri HtmlUrl { get; set; }
         /// <summary>
         /// Author name.
         /// </summary>

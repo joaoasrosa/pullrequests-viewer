@@ -7,6 +7,7 @@ using PullRequestsViewer.GitHub.Bootstrap;
 using PullRequestsViewer.SqlLite.Bootstrap;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace PullRequestsViewer.WebApp
 {
@@ -29,6 +30,8 @@ namespace PullRequestsViewer.WebApp
                 builder.AddSerilog(dispose: true);
             });
 
+            // TODO moce to react and remove this dependency
+            services.Configure<FormOptions>(x => x.ValueCountLimit = 2048);
             services.AddMvc();
             services.GitHubBootstrap();
             services.SqlLiteBootstrap();

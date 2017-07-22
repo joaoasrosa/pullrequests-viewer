@@ -49,7 +49,7 @@ namespace PullRequestsViewer.GitHub.Tests
 
             var result = await _sut.GetOrganisationsAsync();
 
-            result.ShouldBeEquivalentTo(organizations.Select(x => new Organisation { Name = x.Name }));
+            result.ShouldBeEquivalentTo(organizations.Select(x => new Organisation { Name = x.Login }));
         }
     }
 }

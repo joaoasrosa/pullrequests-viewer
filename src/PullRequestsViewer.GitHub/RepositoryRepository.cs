@@ -3,6 +3,7 @@ using PullRequestsViewer.Domain;
 using PullRequestsViewer.Domain.Interfaces;
 using PullRequestsViewer.GitHub.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Repository = PullRequestsViewer.Domain.Repository;
 
@@ -27,9 +28,12 @@ namespace PullRequestsViewer.GitHub
         /// <inheritdoc />
         public async Task<IReadOnlyList<Repository>> GetAllAsync(Organisation organisation)
         {
-            var repositories = await _gitHubClient.Repository.GetAllForOrg(organisation.Name);
+            var repositories = (await _gitHubClient.Repository.GetAllForOrg(organisation.Name));
 
-            return repositories.ConvertToDomain();
+            if (repositories == null)
+                return null;
+            
+            return repositories.OrderBy(x => x.Name).ConvertToDomain();
         }
     }
 }
