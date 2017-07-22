@@ -17,7 +17,7 @@ namespace PullRequestsViewer.GitHub.Extensions
             {
                 domainOrganisations[i] = new Organisation
                                          {
-                                             Name = organisations[i].Name
+                                             Name = organisations[i].Login
                                          };
             }
 

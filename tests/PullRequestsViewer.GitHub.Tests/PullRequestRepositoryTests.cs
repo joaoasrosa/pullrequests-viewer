@@ -57,7 +57,7 @@ namespace PullRequestsViewer.GitHub.Tests
                 AuthorName = x.User.Name,
                 Description = x.Body,
                 Number = x.Number,
-                Url = x.Url
+                HtmlUrl = x.Url
             }));
         }
     }

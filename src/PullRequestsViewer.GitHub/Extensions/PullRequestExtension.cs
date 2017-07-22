@@ -18,8 +18,8 @@ namespace PullRequestsViewer.GitHub.Extensions
                                         {
                                             Title = pullRequests[i].Title,
                                             Description = pullRequests[i].Body,
-                                            Url = pullRequests[i].Url,
-                                            AuthorName = pullRequests[i].User.Name,
+                                            HtmlUrl = pullRequests[i].HtmlUrl,
+                                            AuthorName = pullRequests[i].User.Login,
                                             Number = pullRequests[i].Number
                                         };
             }

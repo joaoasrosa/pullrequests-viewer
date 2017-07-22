@@ -28,7 +28,8 @@ namespace PullRequestsViewer.WebApp.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        [ActionName("Index")]
+        public async Task<IActionResult> IndexAsync()
         {
             try
             {
