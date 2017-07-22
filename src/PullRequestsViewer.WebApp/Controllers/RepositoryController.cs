@@ -54,7 +54,8 @@ namespace PullRequestsViewer.WebApp.Controllers
                     organisationModels.Add(organisationModel);
                 }
 
-                return View(new OrganisationRepositoriesViewModel { Organisations = organisationModels });
+                return View(new OrganisationRepositoriesViewModel(organisationModels,
+                    await _repositoryPersistence.GetAllAsync()));
             }
             catch (Exception exception)
             {

@@ -1,4 +1,4 @@
 version: 0.0.{build}
 image: Visual Studio 2017
 build_script:
-- ps: ./build.ps1
+- ps: ./build.ps1 -ScriptArgs '-targetArg="Default";-configuration="Release";-nugetApiKey="DUMYMY"'
