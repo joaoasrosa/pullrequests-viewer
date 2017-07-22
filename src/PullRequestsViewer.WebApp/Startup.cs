@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PullRequestsViewer.GitHub.Bootstrap;
 using PullRequestsViewer.SqlLite.Bootstrap;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace PullRequestsViewer.WebApp
 {
@@ -12,6 +15,7 @@ namespace PullRequestsViewer.WebApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SetupLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -19,6 +23,12 @@ namespace PullRequestsViewer.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(builder =>
+            {
+                // Specifying dispose: true closes and flushes the Serilog `Log` class when the app shuts down.
+                builder.AddSerilog(dispose: true);
+            });
+
             services.AddMvc();
             services.GitHubBootstrap();
             services.SqlLiteBootstrap();
@@ -47,5 +57,7 @@ namespace PullRequestsViewer.WebApp
 
             app.ApplicationServices.InitialiseDatastore();
         }
+
+        private void SetupLogger() => Log.Logger = new LoggerConfiguration().Enrich.FromLogContext().WriteTo.Console().CreateLogger();
     }
 }

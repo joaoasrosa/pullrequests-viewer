@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using PullRequestsViewer.Domain;
+using PullRequestsViewer.Domain.Interfaces;
+using PullRequestsViewer.WebApp.Models;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PullRequestsViewer.WebApp.Models;
-using PullRequestsViewer.Domain.Interfaces;
-using PullRequestsViewer.Domain;
 
 namespace PullRequestsViewer.WebApp.Controllers
 {
@@ -14,18 +14,42 @@ namespace PullRequestsViewer.WebApp.Controllers
     {
         private readonly IRepositoryPersistence _repositoryPersistence;
         private readonly ICredentialsRepository _credentialsRepository;
+        private readonly IPullRequestRepository _pullRequestRepository;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ICredentialsRepository credentialsRepository, IRepositoryPersistence repositoryPersistence)
+        public HomeController(ICredentialsRepository credentialsRepository,
+            IRepositoryPersistence repositoryPersistence,
+            IPullRequestRepository pullRequestRepository,
+            ILogger<HomeController> logger)
         {
             _credentialsRepository = credentialsRepository;
             _repositoryPersistence = repositoryPersistence;
+            _pullRequestRepository = pullRequestRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            if (!_credentialsRepository.IsUserSetted())
-                return RedirectToAction("Login");
+            try
+            {
+                if (!_credentialsRepository.IsUserSetted())
+                    return RedirectToAction("Login");
 
+                var repositories = await _repositoryPersistence.GetAllAsync();
+
+                if (repositories == null || !repositories.Any())
+                {
+                    return View(null);
+                }
+
+                var pullRequests = await _pullRequestRepository.GetAllAsync(repositories);
+
+                return View(pullRequests);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "An error occurred retrieving the Pull Requests.");
+            }
             return View();
         }
 
