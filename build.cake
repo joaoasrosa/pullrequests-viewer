@@ -105,7 +105,7 @@ Task("CreateNuGet")
 		var settings = new NuGetPackSettings 
 		{
 			OutputDirectory = artifactsDir,
-			Version = gitVersion.NuGetVersionV2
+			Version = gitVersion.NuGetVersionV2 + "-rc"
 		};
 
 		NuGetPack(publishedNuspecFile, settings);

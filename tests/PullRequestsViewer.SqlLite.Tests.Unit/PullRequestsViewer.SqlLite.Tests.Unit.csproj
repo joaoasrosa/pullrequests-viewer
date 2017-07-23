@@ -18,7 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
     <ProjectReference Include="..\..\src\PullRequestsViewer.SqlLite\PullRequestsViewer.SqlLite.csproj" />
-    <ProjectReference Include="..\PullRequestsViewer.Common.Tests.Unit\PullRequestsViewer.Common.Tests.Unit.csproj" />
+    <ProjectReference Include="..\PullRequestsViewer.Common.Tests\PullRequestsViewer.Common.Tests.csproj" />
   </ItemGroup>
 
 </Project>

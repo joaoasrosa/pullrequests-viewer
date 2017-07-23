@@ -1,4 +1,4 @@
-﻿@model IReadOnlyList<PullRequestsViewer.Domain.PullRequest>
+﻿@model IReadOnlyList<PullRequestViewModel>
 <div class="page-header">
     <h1>Pull Requests. <small>Open pull requests.</small></h1>
 </div>
@@ -20,6 +20,10 @@ else if (Model.Any())
                     <th>@Html.DisplayNameFor(x => x.First().Number)</th>
                     <th>@Html.DisplayNameFor(x => x.First().Title)</th>
                     <th>@Html.DisplayNameFor(x => x.First().AuthorName)</th>
+                    <th>@Html.DisplayNameFor(x => x.First().CreatedDate)</th>
+                    <th>@Html.DisplayNameFor(x => x.First().LastUpdateDate)</th>
+                    <th>@Html.DisplayNameFor(x => x.First().TotalOpenTimeInMinutes)</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +39,18 @@ else if (Model.Any())
                         </td>
                         <td>
                             @pullRequest.AuthorName
+                        </td>
+                        <td>
+                            @pullRequest.CreatedDate
+                        </td>
+                        <td>
+                            @pullRequest.LastUpdateDate
+                        </td>
+                        <td>
+                            @pullRequest.TotalOpenTimeInMinutes
+                        </td>
+                        <td>
+                            <a href="@pullRequest.HtmlUrl" target="_blank">View PR</a>
                         </td>
                     </tr>
                 }

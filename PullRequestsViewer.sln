@@ -19,6 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.GitHub.T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F53E7105-F9F7-4E1F-AE56-75AF520D26DC}"
 	ProjectSection(SolutionItems) = preProject
+		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -36,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.SqlLite"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.SqlLite.Tests.Unit", "tests\PullRequestsViewer.SqlLite.Tests.Unit\PullRequestsViewer.SqlLite.Tests.Unit.csproj", "{E39A1049-57AF-4310-B627-2FFA33135BD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PullRequestsViewer.Common.Tests.Unit", "tests\PullRequestsViewer.Common.Tests.Unit\PullRequestsViewer.Common.Tests.Unit.csproj", "{A865E396-0A91-49BE-81A8-BB1B531CBB90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PullRequestsViewer.Common.Tests", "tests\PullRequestsViewer.Common.Tests\PullRequestsViewer.Common.Tests.csproj", "{FFD90BA7-24CB-4B24-BFF9-935C2324D632}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,18 +133,18 @@ Global
 		{E39A1049-57AF-4310-B627-2FFA33135BD1}.Release|x64.Build.0 = Release|Any CPU
 		{E39A1049-57AF-4310-B627-2FFA33135BD1}.Release|x86.ActiveCfg = Release|Any CPU
 		{E39A1049-57AF-4310-B627-2FFA33135BD1}.Release|x86.Build.0 = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|x64.Build.0 = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Debug|x86.Build.0 = Debug|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|x64.ActiveCfg = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|x64.Build.0 = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|x86.ActiveCfg = Release|Any CPU
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90}.Release|x86.Build.0 = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|x64.Build.0 = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Debug|x86.Build.0 = Debug|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|x64.ActiveCfg = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|x64.Build.0 = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|x86.ActiveCfg = Release|Any CPU
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,7 +157,7 @@ Global
 		{C8C347B6-AC90-4A0A-8C5B-8780E2BB8C84} = {1F3507EC-A748-4B1C-B90D-D212C9A31DC1}
 		{E0C0C58A-A0E4-4C2C-947B-1E3AA6D08B27} = {D7A6041B-98F0-418D-80CA-AFEA245FA8F6}
 		{E39A1049-57AF-4310-B627-2FFA33135BD1} = {1F3507EC-A748-4B1C-B90D-D212C9A31DC1}
-		{A865E396-0A91-49BE-81A8-BB1B531CBB90} = {1F3507EC-A748-4B1C-B90D-D212C9A31DC1}
+		{FFD90BA7-24CB-4B24-BFF9-935C2324D632} = {1F3507EC-A748-4B1C-B90D-D212C9A31DC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83FF9785-8B15-46FE-AE5D-695E08B40BD0}
