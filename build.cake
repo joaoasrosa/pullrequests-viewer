@@ -11,13 +11,8 @@ var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csp
 var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 var publishedNuspecFile = publishDir + "PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 
-//var testProjects = GetFiles("./tests/**Tests.Unit.csproj");
-var testProjects = new []
-{
-	"./tests/PullRequestsViewer.WebApp.Tests.Unit",
-	"./tests/PullRequestsViewer.GitHub.Tests.Unit",
-	"./tests/PullRequestsViewer.SqlLite.Tests.Unit"
-};
+var testProjects = GetFiles("./tests/*.Tests.Unit/*.Tests.Unit.csproj");
+GitVersion gitVersion = null;
 
 Task("Clean")
     .Does(() => {
@@ -57,11 +52,11 @@ Task("GitVersion")
     .IsDependentOn("Restore")
     .Does(() =>
 	{
-		var result = GitVersion(new GitVersionSettings {
+		gitVersion = GitVersion(new GitVersionSettings {
 			UpdateAssemblyInfo = true
 		});
 
-		Information(result.FullSemVer);
+		Information(gitVersion.FullSemVer);
 	});
 
 Task("Build")
@@ -86,8 +81,8 @@ Task("Test")
 
 		foreach(var testProject in testProjects)
         {
-			Information("Running tests in project " + testProject);
-			DotNetCoreTest(testProject, settings);
+			Information("Running tests in project " + testProject.FullPath);
+			DotNetCoreTest(testProject.FullPath, settings);
 		}
     });
 
@@ -109,7 +104,8 @@ Task("CreateNuGet")
 	.Does(() => {
 		var settings = new NuGetPackSettings 
 		{
-			OutputDirectory = artifactsDir
+			OutputDirectory = artifactsDir,
+			Version = gitVersion.NuGetVersionV2
 		};
 
 		NuGetPack(publishedNuspecFile, settings);
