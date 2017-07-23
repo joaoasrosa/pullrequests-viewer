@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
     <ProjectReference Include="..\..\src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+    <ProjectReference Include="..\PullRequestsViewer.Common.Tests\PullRequestsViewer.Common.Tests.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PullRequestsViewer.Domain
+namespace PullRequestsViewer.WebApp.Models
 {
-    /// <summary>
-    /// Pull Request.
-    /// </summary>
-    public class PullRequest
+    public class PullRequestViewModel
     {
         /// <summary>
         /// Title.
@@ -35,5 +35,15 @@ namespace PullRequestsViewer.Domain
         /// The last update date.
         /// </summary>
         public DateTime LastUpdateDate { get; set; }
+        /// <summary>
+        /// The total open time in minutes, since last update.
+        /// </summary>
+        public double TotalOpenTimeInMinutes
+        {
+            get
+            {
+                return (DateTime.UtcNow - LastUpdateDate).TotalMinutes;
+            }
+        }
     }
 }

@@ -20,8 +20,10 @@ namespace PullRequestsViewer.GitHub.Extensions
                                             Description = pullRequests[i].Body,
                                             HtmlUrl = pullRequests[i].HtmlUrl,
                                             AuthorName = pullRequests[i].User.Login,
-                                            Number = pullRequests[i].Number
-                                        };
+                                            Number = pullRequests[i].Number,
+                                            CreatedDate = pullRequests[i].CreatedAt.UtcDateTime,
+                                            LastUpdateDate = pullRequests[i].UpdatedAt.UtcDateTime
+                };
             }
 
             return domainPullRequests;

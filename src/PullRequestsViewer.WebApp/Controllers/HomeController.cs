@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PullRequestsViewer.Domain;
 using PullRequestsViewer.Domain.Interfaces;
+using PullRequestsViewer.WebApp.Extensions;
 using PullRequestsViewer.WebApp.Models;
 using System;
 using System.Diagnostics;
@@ -45,7 +46,7 @@ namespace PullRequestsViewer.WebApp.Controllers
 
                 var pullRequests = await _pullRequestRepository.GetAllAsync(repositories);
 
-                return View(pullRequests);
+                return View(pullRequests.ConvertToViewModel().OrderByDescending(x => x.TotalOpenTimeInMinutes).ToArray());
             }
             catch (Exception exception)
             {

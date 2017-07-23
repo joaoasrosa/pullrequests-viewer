@@ -42,6 +42,13 @@ namespace PullRequestsViewer.WebApp.Controllers
 
                 var organisationModels = new List<OrganisationModel>();
 
+                // TODO rename the class to some that cover this use case.
+                organisationModels.Add(new OrganisationModel
+                {
+                    Name = _credentialsRepository.User.Username,
+                    Repositories = (await _repositoryRepository.GetAllForCurrentAsync()).ConvertToModel()
+                });
+
                 var organisations = await _organisationRepository.GetOrganisationsAsync();
 
                 foreach (var organisation in organisations)

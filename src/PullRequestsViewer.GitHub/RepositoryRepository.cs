@@ -15,24 +15,37 @@ namespace PullRequestsViewer.GitHub
     public class RepositoryRepository : IRepositoryRepository
     {
         private readonly IGitHubClient _gitHubClient;
+        private readonly ICredentialsRepository _credentialsRepository;
 
         /// <summary>
         /// Default ctor.
         /// </summary>
         /// <param name="gitHubClient">The GitHub client.</param>
-        public RepositoryRepository(IGitHubClient gitHubClient)
+        public RepositoryRepository(IGitHubClient gitHubClient, ICredentialsRepository credentialsRepository)
         {
             _gitHubClient = gitHubClient;
+            _credentialsRepository = credentialsRepository;
         }
 
         /// <inheritdoc />
         public async Task<IReadOnlyList<Repository>> GetAllAsync(Organisation organisation)
         {
-            var repositories = (await _gitHubClient.Repository.GetAllForOrg(organisation.Name));
+            var repositories = await _gitHubClient.Repository.GetAllForOrg(organisation.Name);
 
             if (repositories == null)
                 return null;
-            
+
+            return repositories.OrderBy(x => x.Name).ConvertToDomain();
+        }
+
+        /// <inheritdoc />
+        public async Task<IReadOnlyList<Repository>> GetAllForCurrentAsync()
+        {
+            var repositories = await _gitHubClient.Repository.GetAllForUser(_credentialsRepository.User.Username);
+
+            if (repositories == null)
+                return null;
+
             return repositories.OrderBy(x => x.Name).ConvertToDomain();
         }
     }
