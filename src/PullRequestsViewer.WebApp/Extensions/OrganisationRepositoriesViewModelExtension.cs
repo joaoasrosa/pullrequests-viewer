@@ -16,6 +16,7 @@ namespace PullRequestsViewer.WebApp.Extensions
             {
                 foreach (var repository in organisation.Repositories)
                 {
+                    // TODO: Business logic here. Once we move to react we won't need it.
                     if (!repository.Selected)
                         continue;
 

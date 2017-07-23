@@ -6,6 +6,7 @@ namespace PullRequestsViewer.WebApp.Models
 {
     public class OrganisationRepositoriesViewModel
     {
+        public OrganisationRepositoriesViewModel() { }
 
         public OrganisationRepositoriesViewModel(IReadOnlyList<OrganisationModel> organisations, IReadOnlyList<Repository> repositories)
         {
@@ -17,7 +18,6 @@ namespace PullRequestsViewer.WebApp.Models
                     {
                         repository.Selected = true;
                     }
-
                 }
             }
 

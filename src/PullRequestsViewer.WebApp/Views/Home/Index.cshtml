@@ -27,14 +27,14 @@ else if (Model.Any())
                 {
                     <tr class="clickable-row" data-href="@pullRequest.HtmlUrl">
                         <td>
-                            @Html.Label(pullRequest.Number.ToString())
+                            @pullRequest.Number
                         </td>
                         <td>
-                            @Html.Label(pullRequest.Title)
-                            @Html.Label(pullRequest.Description)
+                            @pullRequest.Title
+                            @pullRequest.Description
                         </td>
                         <td>
-                            @Html.Label(pullRequest.AuthorName)
+                            @pullRequest.AuthorName
                         </td>
                     </tr>
                 }
