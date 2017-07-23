@@ -1,14 +1,10 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 using Octokit;
-using PullRequestsViewer.GitHub.Tests.Builders.Domain;
 using PullRequestsViewer.GitHub.Tests.Builders.GitHub;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
-using System.Linq;
 
 namespace PullRequestsViewer.GitHub.Tests
 {
@@ -32,7 +28,7 @@ namespace PullRequestsViewer.GitHub.Tests
             _pullRequestsClientMock.Setup(x => x.GetAllForRepository(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(PullRequestBuilder.GenerateValidPullRequests());
 
-            var repositories = Builders.Domain.RepositoryBuilder.GenerateValidRepositories();
+            var repositories = Common.Tests.Builders.Domain.RepositoryBuilder.GenerateValidRepositories();
 
             await _sut.GetAllAsync(repositories);
 
@@ -49,7 +45,7 @@ namespace PullRequestsViewer.GitHub.Tests
             _pullRequestsClientMock.Setup(x => x.GetAllForRepository(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(pullRequests);
 
-            var result = await _sut.GetAllAsync(Builders.Domain.RepositoryBuilder.GenerateValidRepositories());
+            var result = await _sut.GetAllAsync(Common.Tests.Builders.Domain.RepositoryBuilder.GenerateValidRepositories());
 
             result.ShouldBeEquivalentTo(pullRequests.Select(x => new Domain.PullRequest
             {
