@@ -56,7 +56,12 @@ Task("GitVersion")
 			UpdateAssemblyInfo = true
 		});
 
-		Information(gitVersion.FullSemVer);
+	    var file = File(projectPath);
+	    XmlPoke(file, "/Project/PropertyGroup/AssemblyVersion", gitVersion.MajorMinorPatch);
+		XmlPoke(file, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
+
+		Information("Full SemVer: " + gitVersion.FullSemVer);
+		Information("Major Minor Patch: " + gitVersion.MajorMinorPatch);
 	});
 
 Task("Build")
