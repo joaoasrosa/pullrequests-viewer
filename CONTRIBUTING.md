@@ -1,7 +1,7 @@
 # Contributing
 This project needs you! If you found an issue, or you want to actively contribute, this is the starting point!
 
-But wait, are you asking... Here should I start?
+But wait, are you asking... Where should I start?
 
 ## The place where it starts
 If you get to this point, you have my respect! You are using the tool, and that is awesome! Thanks!!
