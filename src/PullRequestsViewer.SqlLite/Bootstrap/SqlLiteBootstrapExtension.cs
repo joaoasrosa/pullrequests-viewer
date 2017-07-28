@@ -19,8 +19,8 @@ namespace PullRequestsViewer.SqlLite.Bootstrap
             using (var serviceScope = serviceProvider.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PullRequestsViewerContext>();
+
                 context.Database.EnsureCreated();
-                context.Database.Migrate();
             }
         }
     }
