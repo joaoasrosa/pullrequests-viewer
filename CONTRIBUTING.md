@@ -61,10 +61,10 @@ Then you create a [Pull Request][github_pull_requests] with a [brief description
 [issues]: https://github.com/joaoasrosa/pullrequests-viewer/issues
 [github_account]:https://github.com/join
 [forking_guide]: https://help.github.com/articles/fork-a-repo/
-[setup_guide]: TODO
+[setup_guide]: https://github.com/joaoasrosa/pullrequests-viewer/blob/master/docs/SETUP.md
 [semver]: http://semver.org/
 [git_commit_messages]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 [github_pull_requests]: https://help.github.com/articles/creating-a-pull-request/
 [pr_description]: https://github.com/blog/1943-how-to-write-the-perfect-pull-request
-[tests]: TODO
-[styling_guide]: TODO
+[tests]: https://github.com/joaoasrosa/pullrequests-viewer/blob/master/docs/DEVELOPMENT.md#Tests
+[styling_guide]: https://github.com/joaoasrosa/pullrequests-viewer/blob/master/docs/DEVELOPMENT.md#Styling_Guide
