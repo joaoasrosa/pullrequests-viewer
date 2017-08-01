@@ -30,11 +30,11 @@ namespace PullRequestsViewer.WebApp
                 builder.AddSerilog(dispose: true);
             });
 
-            // TODO moce to react and remove this dependency
+            // TODO move to react and remove this dependency
             services.Configure<FormOptions>(x => x.ValueCountLimit = 2048);
             services.AddMvc();
             services.GitHubBootstrap();
-            services.SqlLiteBootstrap();
+            services.SqlLiteBootstrap(Configuration.GetConnectionString("PullRequestsViewerDatabase"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

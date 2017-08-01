@@ -7,9 +7,9 @@ namespace PullRequestsViewer.SqlLite.Bootstrap
 {
     public static class SqlLiteBootstrapExtension
     {
-        public static void SqlLiteBootstrap(this IServiceCollection services)
+        public static void SqlLiteBootstrap(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<PullRequestsViewerContext>(x => x.UseSqlite(PullRequestsViewerContext.DataSource));
+            services.AddDbContext<PullRequestsViewerContext>(x => x.UseSqlite(connectionString));
             services.AddScoped<IPullRequestsViewerContext>(x => x.GetService<PullRequestsViewerContext>());
             services.AddScoped<IRepositoryPersistence, RepositoryPersistence>();
         }
