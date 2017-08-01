@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.3" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.0-preview1-26462" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170628-02" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PullRequestsViewer.Domain\PullRequestsViewer.Domain.csproj" />
+    <ProjectReference Include="..\..\src\PullRequestsViewer.GitHub\PullRequestsViewer.GitHub.csproj" />
+    <ProjectReference Include="..\..\src\PullRequestsViewer.SqlLite\PullRequestsViewer.SqlLite.csproj" />
+    <ProjectReference Include="..\..\src\PullRequestsViewer.WebApp\PullRequestsViewer.WebApp.csproj" />
+  </ItemGroup>
+
+</Project>

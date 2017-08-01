@@ -11,13 +11,16 @@ var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csp
 var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 var publishedNuspecFile = publishDir + "PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 
-var testProjects = GetFiles("./tests/*.Tests.Unit/*.Tests.Unit.csproj");
+var unitTestProjects = GetFiles("./tests/*.Tests.Unit/*.Tests.Unit.csproj");
+var acceptanceTestProjects = GetFiles("./tests/*.Tests.Acceptance/*.Tests.Acceptance.csproj");
 GitVersion gitVersion = null;
 
 Task("Clean")
     .Does(() => {
 		CleanDirectories("./src/**/bin");
 		CleanDirectories("./src/**/obj");
+		CleanDirectories("./tests/**/bin");
+		CleanDirectories("./tests/**/obj");
 
         if (DirectoryExists(publishDir))
         {
@@ -79,7 +82,7 @@ Task("Build")
         DotNetCoreBuild(solutionPath, settings);
     });
 
-Task("Test")
+Task("Unit-Test")
     .IsDependentOn("Build")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
@@ -88,7 +91,23 @@ Task("Test")
 			NoBuild = true
 		};
 
-		foreach(var testProject in testProjects)
+		foreach(var testProject in unitTestProjects)
+        {
+			Information("Running tests in project " + testProject.FullPath);
+			DotNetCoreTest(testProject.FullPath, settings);
+		}
+    });
+
+Task("Acceptance-Test")
+    .IsDependentOn("Build")
+    .Does(() => {
+	    var settings = new DotNetCoreTestSettings
+		{
+			Configuration = configurationArg,
+			NoBuild = true
+		};
+
+		foreach(var testProject in acceptanceTestProjects)
         {
 			Information("Running tests in project " + testProject.FullPath);
 			DotNetCoreTest(testProject.FullPath, settings);
@@ -139,6 +158,10 @@ Task("CreateContainer")
 	    Information("TODO: create docker image.");
     });
 
+Task("Test")
+    .IsDependentOn("Unit-Test")
+    .IsDependentOn("Acceptance-Test");
+	
 Task("Default")
     .IsDependentOn("Test");
 
