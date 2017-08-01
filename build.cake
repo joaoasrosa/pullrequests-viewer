@@ -16,6 +16,9 @@ GitVersion gitVersion = null;
 
 Task("Clean")
     .Does(() => {
+		CleanDirectories("./src/**/bin");
+		CleanDirectories("./src/**/obj");
+
         if (DirectoryExists(publishDir))
         {
             DeleteDirectory(publishDir, recursive:true);
@@ -59,6 +62,7 @@ Task("GitVersion")
 	    var file = File(projectPath);
 	    XmlPoke(file, "/Project/PropertyGroup/AssemblyVersion", gitVersion.MajorMinorPatch);
 		XmlPoke(file, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
+		XmlPoke(file, "/Project/PropertyGroup/Version", gitVersion.FullSemVer);
 
 		Information("Full SemVer: " + gitVersion.FullSemVer);
 		Information("Major Minor Patch: " + gitVersion.MajorMinorPatch);
