@@ -16,10 +16,11 @@ namespace PullRequestsViewer.WebApp.Tests.Acceptance.Controllers
         }
 
         [Fact]
-        public async Task IndexAsync_IfNotAuthenticated_ReturnsStatusCode302()
+        public async Task IndexAsync_IfNotAuthenticated_RedirectToLoginPage()
         {
             var response = await _client.GetAsync("/");
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+            response.Headers.Location.LocalPath.Should().Be("/Home/Login");
         }
     }
 }
