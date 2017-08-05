@@ -4,4 +4,4 @@ build_script:
 - ps: >-
     choco install dotnetcore-runtime --pre
 
-    ./build.ps1 -Configuration Release -Target Package
+    ./build.ps1 -Configuration Release
