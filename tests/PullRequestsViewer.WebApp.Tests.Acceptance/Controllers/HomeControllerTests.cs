@@ -1,9 +1,5 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
+using PullRequestsViewer.WebApp.Tests.Acceptance.Stubs;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,34 +7,21 @@ using Xunit;
 
 namespace PullRequestsViewer.WebApp.Tests.Acceptance.Controllers
 {
-    public class HomeControllerTests : IDisposable
+    public class HomeControllerTests : IClassFixture<TestFixture<Startup, StartupStub>>
     {
         private readonly HttpClient _client;
 
-        public HomeControllerTests()
+        public HomeControllerTests(TestFixture<Startup, StartupStub> fixture)
         {
-            var webHostBuilder = new WebHostBuilder();
-            webHostBuilder.ConfigureAppConfiguration((context, config) =>
-            {
-                config.AddInMemoryCollection(new[] { KeyValuePair.Create("ConnectionStrings:PullRequestsViewerDatabase", "Data Source=:memory:") });
-            });
-            
-            webHostBuilder.UseStartup<Startup>();
-            var testServer = new TestServer(webHostBuilder);
-
-            _client = testServer.CreateClient();
+            _client = fixture.Client;
         }
 
         [Fact]
-        public async Task IndexAsync_IfNotAuthenticated_ReturnsStatusCode302()
+        public async Task IndexAsync_IfNotAuthenticated_RedirectToLoginPage()
         {
             var response = await _client.GetAsync("/");
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        }
-
-        public void Dispose()
-        {
-            _client?.Dispose();
+            response.Headers.Location.Should().Be("/Home/Login");
         }
     }
 }
