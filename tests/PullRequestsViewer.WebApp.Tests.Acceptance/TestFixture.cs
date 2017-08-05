@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using PullRequestsViewer.WebApp.Tests.Acceptance.Stubs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace PullRequestsViewer.WebApp.Tests.Acceptance
     /// A test fixture which hosts the target project (project we wish to test) in an in-memory server.
     /// </summary>
     /// <typeparam name="TStartup">Target project's startup type</typeparam>
-    public class TestFixture<TStartup> : IDisposable
+    public class TestFixture<TStartup, TStartupStub> : IDisposable
     {
         private const string SolutionName = "PullRequestsViewer.sln";
         private readonly TestServer _server;
@@ -37,11 +38,11 @@ namespace PullRequestsViewer.WebApp.Tests.Acceptance
                 .UseContentRoot(contentRoot)
                 .ConfigureServices(InitializeServices).ConfigureAppConfiguration((context, config) =>
                 {
-                    config.AddInMemoryCollection(new[] { KeyValuePair.Create("ConnectionStrings:PullRequestsViewerDatabase", 
-                        "Data Source=:memory:") });
+                    config.AddInMemoryCollection(new[] { KeyValuePair.Create("ConnectionStrings:PullRequestsViewerDatabase",
+                        "Data Source=PullRequestsViewer.Tests.db") });
                 })
                 .UseEnvironment("Development")
-                .UseStartup(typeof(TStartup));
+                .UseStartup(typeof(TStartupStub));
 
             _server = new TestServer(builder);
 
@@ -55,6 +56,8 @@ namespace PullRequestsViewer.WebApp.Tests.Acceptance
         {
             Client?.Dispose();
             _server?.Dispose();
+            // TODO: we need a more elegant way to do it...
+            typeof(TStartupStub).GetMethod("TearDownDatabases", BindingFlags.Public | BindingFlags.Static).Invoke(null, null);
         }
 
         protected virtual void InitializeServices(IServiceCollection services)
