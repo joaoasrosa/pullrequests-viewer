@@ -1,9 +1,4 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,22 +6,13 @@ using Xunit;
 
 namespace PullRequestsViewer.WebApp.Tests.Acceptance.Controllers
 {
-    public class HomeControllerTests : IDisposable
+    public class HomeControllerTests : IClassFixture<TestFixture<Startup>>
     {
         private readonly HttpClient _client;
 
-        public HomeControllerTests()
+        public HomeControllerTests(TestFixture<Startup> fixture)
         {
-            var webHostBuilder = new WebHostBuilder();
-            webHostBuilder.ConfigureAppConfiguration((context, config) =>
-            {
-                config.AddInMemoryCollection(new[] { KeyValuePair.Create("ConnectionStrings:PullRequestsViewerDatabase", "Data Source=:memory:") });
-            });
-            
-            webHostBuilder.UseStartup<Startup>();
-            var testServer = new TestServer(webHostBuilder);
-
-            _client = testServer.CreateClient();
+            _client = fixture.Client;
         }
 
         [Fact]
@@ -34,11 +20,6 @@ namespace PullRequestsViewer.WebApp.Tests.Acceptance.Controllers
         {
             var response = await _client.GetAsync("/");
             response.StatusCode.Should().Be(HttpStatusCode.Redirect);
-        }
-
-        public void Dispose()
-        {
-            _client?.Dispose();
         }
     }
 }
