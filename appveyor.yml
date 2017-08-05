@@ -1,4 +1,7 @@
 version: 0.0.{build}
 image: Visual Studio 2017
 build_script:
-- ps: ./build.ps1 -Configuration Release -Target CreateNuGet 
+- ps: >-
+    choco install dotnetcore-runtime --pre
+
+    ./build.ps1 -Configuration Release -Target Package
