@@ -1,11 +1,22 @@
 #addin "Cake.Docker"
 #tool "nuget:?package=GitVersion.CommandLine"
 
-var nugetApiKeyArg = Argument<string>("nugetApiKey", "");
-var targetArg = Argument<string>("target", "Default");
-var configurationArg = Argument<string>("configuration", "Debug");
+///////////////////////////////////////////////////////////////////////////////
+// ARGUMENTS
+///////////////////////////////////////////////////////////////////////////////
+
+var target = Argument<string>("target", "Default");
+var configuration = Argument<string>("configuration", "Release");
+var verbosity = Argument<string>("verbosity");
+var nugetApiKey = Argument<string>("nugetApiKey", "");
+
+///////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES
+///////////////////////////////////////////////////////////////////////////////
+
 var artifactsDir = "./artifacts/";
 var publishDir = "./publish/";
+
 var solutionPath = "./PullRequestsViewer.sln";
 var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csproj";
 var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
@@ -15,38 +26,47 @@ var unitTestProjects = GetFiles("./tests/*.Tests.Unit/*.Tests.Unit.csproj");
 var acceptanceTestProjects = GetFiles("./tests/*.Tests.Acceptance/*.Tests.Acceptance.csproj");
 GitVersion gitVersion = null;
 
+///////////////////////////////////////////////////////////////////////////////
+// SETUP / TEARDOWN
+///////////////////////////////////////////////////////////////////////////////
+
+Setup(ctx =>
+{
+    // Executed BEFORE the first task.
+    EnsureDirectoryExists(artifactsDir);
+    EnsureDirectoryExists(publishDir);
+    Verbose("Running tasks...");
+});
+
+Teardown(ctx =>
+{
+    // Executed AFTER the last task.
+    Verbose("Finished running tasks.");
+});
+
+///////////////////////////////////////////////////////////////////////////////
+// TASK DEFINITIONS
+///////////////////////////////////////////////////////////////////////////////
+
 Task("Clean")
+    .Description("Cleans all directories that are used during the build process.")
     .Does(() => {
-		CleanDirectories("./src/**/bin");
-		CleanDirectories("./src/**/obj");
-		CleanDirectories("./tests/**/bin");
-		CleanDirectories("./tests/**/obj");
-
-        if (DirectoryExists(publishDir))
-        {
-            DeleteDirectory(publishDir, recursive:true);
-        }
-
-        CreateDirectory(publishDir);
-
-		if (DirectoryExists(artifactsDir))
-        {
-            DeleteDirectory(artifactsDir, recursive:true);
-        }
-
-        CreateDirectory(artifactsDir);
+		CleanDirectories("./src/**/bin/**");
+		CleanDirectories("./src/**/obj/**");
+		CleanDirectories("./tests/**/bin/**");
+		CleanDirectories("./tests/**/obj/**");
+		CleanDirectory(artifactsDir);
+		CleanDirectory(publishDir);
     });
 
 Task("Restore")
-    .IsDependentOn("Clean")
+    .Description("Restores all the NuGet packages that are used by the solution.")
 	.Does(() => {
 	    var settings = new DotNetCoreRestoreSettings
 		{
 			Sources = new[] 
 			{
-				"https://api.nuget.org/v3/index.json", 
-				"https://dotnet.myget.org/F/aspnetcore-ci-dev/api/v3/index.json", 
-				"https://www.myget.org/F/aspnet-contrib/api/v3/index.json"
+				"https://api.nuget.org/v3/index.json"
 			},
 			DisableParallel = false
 		};
@@ -55,7 +75,7 @@ Task("Restore")
     });
 
 Task("GitVersion")
-    .IsDependentOn("Restore")
+    .Description("Set the SemVer to the solution.")
     .Does(() =>
 	{
 		gitVersion = GitVersion(new GitVersionSettings {
@@ -67,27 +87,28 @@ Task("GitVersion")
 		XmlPoke(file, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
 		XmlPoke(file, "/Project/PropertyGroup/Version", gitVersion.FullSemVer);
 
-		Information("Full SemVer: " + gitVersion.FullSemVer);
-		Information("Major Minor Patch: " + gitVersion.MajorMinorPatch);
+		Verbose("Full SemVer: " + gitVersion.FullSemVer);
+		Verbose("Major Minor Patch: " + gitVersion.MajorMinorPatch);
 	});
 
 Task("Build")
+    .Description("Builds the solution.")
     .IsDependentOn("GitVersion")
     .Does(() => {
 		var settings = new DotNetCoreBuildSettings
 		{
-			Configuration = configurationArg
+			Configuration = configuration
 		};
 		
         DotNetCoreBuild(solutionPath, settings);
     });
 
 Task("Unit-Test")
-    .IsDependentOn("Build")
+    .Description("Runs the Unit Tests.")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
 		{
-			Configuration = configurationArg,
+			Configuration = configuration,
 			NoBuild = true
 		};
 
@@ -99,11 +120,11 @@ Task("Unit-Test")
     });
 
 Task("Acceptance-Test")
-    .IsDependentOn("Build")
+    .Description("Runs the Acceptance Tests.")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
 		{
-			Configuration = configurationArg,
+			Configuration = configuration,
 			NoBuild = true
 		};
 
@@ -115,11 +136,12 @@ Task("Acceptance-Test")
     });
 
 Task("Publish")
+    .Description("Publish the Web Application.")
     .IsDependentOn("Test")
     .Does(() => {
 	    var settings = new DotNetCorePublishSettings
 		{
-			Configuration = configurationArg,
+			Configuration = configuration,
 			OutputDirectory = publishDir + "PullRequestsViewer.WebApp/lib"
 		};
 
@@ -127,33 +149,36 @@ Task("Publish")
 		CopyFile(nuspecFile, publishedNuspecFile);
     });
 
-Task("CreateNuGet")
+Task("Package")
+    .Description("Package the Web Application.")
 	.IsDependentOn("Publish")
 	.Does(() => {
 		var settings = new NuGetPackSettings 
 		{
 			OutputDirectory = artifactsDir,
-			Version = gitVersion.NuGetVersionV2 + "-rc"
+			Version = gitVersion.NuGetVersionV2
 		};
 
 		NuGetPack(publishedNuspecFile, settings);
 	});
 
-Task("PushNuGet")
-	.IsDependentOn("CreateNuGet")
+Task("PushPackage")
+    .Description("Pushes the Web Application package.")
+	.IsDependentOn("Package")
 	.Does(() => {
 		var packages = GetFiles(artifactsDir + "*.nupkg");
 		
 		var settings = new NuGetPushSettings {
 			Source = "https://www.nuget.org/api/v2/package",
-			ApiKey = nugetApiKeyArg
+			ApiKey = nugetApiKey
 		};
 
 		NuGetPush(packages, settings);
 	});
 
 Task("CreateContainer")
-    .IsDependentOn("PushNuGet")
+    .Description("Creates a container with the Web Application.")
+    .IsDependentOn("Publish")
     .Does(() => {
 	    Information("TODO: create docker image.");
     });
@@ -162,7 +187,27 @@ Task("Test")
     .IsDependentOn("Unit-Test")
     .IsDependentOn("Acceptance-Test");
 	
-Task("Default")
+Task("Build+Test")
+    .IsDependentOn("Build")
     .IsDependentOn("Test");
 
-RunTarget(targetArg);
+Task("Rebuild")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
+    .IsDependentOn("Build");
+
+///////////////////////////////////////////////////////////////////////////////
+// TARGETS
+///////////////////////////////////////////////////////////////////////////////
+
+Task("Default")
+    .Description("This is the default task which will be ran if no specific target is passed in.")
+    .IsDependentOn("Rebuild")
+    .IsDependentOn("Test")
+    .IsDependentOn("Package");
+
+///////////////////////////////////////////////////////////////////////////////
+// EXECUTION
+///////////////////////////////////////////////////////////////////////////////
+
+RunTarget(target);
