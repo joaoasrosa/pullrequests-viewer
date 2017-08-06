@@ -4,4 +4,6 @@ build_script:
 - ps: >-
     choco install dotnetcore --pre
 
+    dotnet --version
+
     ./build.ps1 -Configuration Release
