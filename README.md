@@ -55,7 +55,7 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [nuget]: https://www.nuget.org/
 [cake]: http://cakebuild.net/
 [appveyor]: https://www.appveyor.com/
-[contributing]: https://github.com/joaoasrosa/pullrequests-viewer/CONTRIBUTING.md
+[contributing]: https://github.com/joaoasrosa/pullrequests-viewer/blob/master/CONTRIBUTING.md
 [semver]: http://semver.org/
 [tags]: https://github.com/joaoasrosa/pullrequests-viewer/tags
 [joaoasrosa]: https://github.com/joaoasrosa
