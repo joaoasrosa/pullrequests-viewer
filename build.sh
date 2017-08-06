@@ -33,6 +33,9 @@ CONFIGURATION="Release"
 VERBOSITY="verbose"
 DRYRUN=
 SHOW_VERSION=false
+DOCKER_HUB_REPO=
+NUGET_API_URL=
+NUGET_API_KEY=
 SCRIPT_ARGUMENTS=()
 
 # Parse arguments.
@@ -43,6 +46,9 @@ for i in "$@"; do
         -c|--configuration) CONFIGURATION="$2"; shift ;;
         -v|--verbosity) VERBOSITY="$2"; shift ;;
         -d|--dryrun) DRYRUN="-dryrun" ;;
+        -r|--docker_hub_repo) DOCKER_HUB_REPO="$2"; shift ;;
+        -n|--nuget_api_url) NUGET_API_URL="$2"; shift ;;
+        -k|--nuget_api_key) NUGET_API_KEY="$2"; shift ;;
         --version) SHOW_VERSION=true ;;
         --) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
         *) SCRIPT_ARGUMENTS+=("$1") ;;
@@ -127,5 +133,5 @@ fi
 if $SHOW_VERSION; then
     exec mono "$CAKE_EXE" -version
 else
-    exec mono "$CAKE_EXE" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+    exec mono "$CAKE_EXE" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET -dockerhubrepo=$DOCKER_HUB_REPO -nugetapiurl=$NUGET_API_URL -nugetapikey=$NUGET_API_KEY $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
 fi
