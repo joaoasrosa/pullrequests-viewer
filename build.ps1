@@ -46,6 +46,9 @@ Param(
     [string]$Configuration = "Release",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Verbose",
+    [string]$DockerHubRepo,
+    [string]$NugetApiUrl,
+    [string]$NugetApiKey,
     [switch]$Experimental,
     [Alias("DryRun","Noop")]
     [switch]$WhatIf,
@@ -179,7 +182,7 @@ if(-Not $SkipToolPackageRestore.IsPresent) {
         $md5Hash | Out-File $PACKAGES_CONFIG_MD5 -Encoding "ASCII"
     }
     Write-Verbose -Message ($NuGetOutput | out-string)
-    
+
     Pop-Location
 }
 
@@ -224,5 +227,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
+Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" -dockerhubrepo=`"$DockerHubRepo`" -nugetapiurl=`"$NugetApiUrl`" -nugetapikey=`"$NugetApiKey`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
 exit $LASTEXITCODE

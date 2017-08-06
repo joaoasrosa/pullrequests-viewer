@@ -1,0 +1,5 @@
+FROM microsoft/aspnetcore:2.0.0-preview2
+WORKDIR /app
+COPY . /app
+ENTRYPOINT ["dotnet", "PullRequestsViewer.WebApp.dll"]
+MAINTAINER joaoasrosa

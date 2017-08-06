@@ -8,7 +8,6 @@
 var target = Argument<string>("target", "Default");
 var configuration = Argument<string>("configuration", "Release");
 var verbosity = Argument<string>("verbosity");
-var nugetApiKey = Argument<string>("nugetApiKey", "");
 
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -21,10 +20,14 @@ var solutionPath = "./PullRequestsViewer.sln";
 var projectPath = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.csproj";
 var nuspecFile = "./src/PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
 var publishedNuspecFile = publishDir + "PullRequestsViewer.WebApp/PullRequestsViewer.WebApp.nuspec";
+var dockerFile = "./build/dockerfile";
+var publishedDockerFile = publishDir + "PullRequestsViewer.WebApp/lib/dockerfile";
 
 var unitTestProjects = GetFiles("./tests/*.Tests.Unit/*.Tests.Unit.csproj");
 var acceptanceTestProjects = GetFiles("./tests/*.Tests.Acceptance/*.Tests.Acceptance.csproj");
 GitVersion gitVersion = null;
+string dockerImageName = null;
+string dockerImageFullName = null;
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -43,6 +46,30 @@ Teardown(ctx =>
     // Executed AFTER the last task.
     Verbose("Finished running tasks.");
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// HELPERS
+///////////////////////////////////////////////////////////////////////////////
+
+string GetNuGetApiKey()
+{
+  return GetSetting("nugetapikey");
+}
+
+string GetNuGetApiUrl()
+{
+  return GetSetting("nugetapiurl", "https://www.nuget.org/api/v2/package");
+}
+
+string GetDockerHubRepo()
+{
+  return GetSetting("dockerhubrepo", "joaoasrosa/pullrequestsviewer");
+}
+
+string GetSetting(string key, string defaultValue = "")
+{
+  return EnvironmentVariable("cake-" + key) ?? Argument<string>(key, defaultValue);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASK DEFINITIONS
@@ -64,7 +91,7 @@ Task("Restore")
 	.Does(() => {
 	    var settings = new DotNetCoreRestoreSettings
 		{
-			Sources = new[] 
+			Sources = new[]
 			{
 				"https://api.nuget.org/v3/index.json"
 			},
@@ -99,11 +126,11 @@ Task("Build")
 		{
 			Configuration = configuration
 		};
-		
+
         DotNetCoreBuild(solutionPath, settings);
     });
 
-Task("Unit-Test")
+Task("Unit-Tests")
     .Description("Runs the Unit Tests.")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
@@ -114,12 +141,12 @@ Task("Unit-Test")
 
 		foreach(var testProject in unitTestProjects)
         {
-			Information("Running tests in project " + testProject.FullPath);
+			Verbose("Running tests in project " + testProject.FullPath);
 			DotNetCoreTest(testProject.FullPath, settings);
 		}
     });
 
-Task("Acceptance-Test")
+Task("Acceptance-Tests")
     .Description("Runs the Acceptance Tests.")
     .Does(() => {
 	    var settings = new DotNetCoreTestSettings
@@ -130,14 +157,13 @@ Task("Acceptance-Test")
 
 		foreach(var testProject in acceptanceTestProjects)
         {
-			Information("Running tests in project " + testProject.FullPath);
+			Verbose("Running tests in project " + testProject.FullPath);
 			DotNetCoreTest(testProject.FullPath, settings);
 		}
     });
 
 Task("Publish")
     .Description("Publish the Web Application.")
-    .IsDependentOn("Test")
     .Does(() => {
 	    var settings = new DotNetCorePublishSettings
 		{
@@ -151,9 +177,11 @@ Task("Publish")
 
 Task("Package")
     .Description("Package the Web Application.")
+    .IsDependentOn("Rebuild")
+    .IsDependentOn("Test")
 	.IsDependentOn("Publish")
 	.Does(() => {
-		var settings = new NuGetPackSettings 
+		var settings = new NuGetPackSettings
 		{
 			OutputDirectory = artifactsDir,
 			Version = gitVersion.NuGetVersionV2
@@ -167,10 +195,11 @@ Task("PushPackage")
 	.IsDependentOn("Package")
 	.Does(() => {
 		var packages = GetFiles(artifactsDir + "*.nupkg");
-		
-		var settings = new NuGetPushSettings {
-			Source = "https://www.nuget.org/api/v2/package",
-			ApiKey = nugetApiKey
+
+		var settings = new NuGetPushSettings
+    {
+			Source = GetNuGetApiUrl(),
+			ApiKey = GetNuGetApiKey()
 		};
 
 		NuGetPush(packages, settings);
@@ -178,15 +207,47 @@ Task("PushPackage")
 
 Task("CreateContainer")
     .Description("Creates a container with the Web Application.")
+    .IsDependentOn("Rebuild")
+    .IsDependentOn("Test")
     .IsDependentOn("Publish")
     .Does(() => {
-	    Information("TODO: create docker image.");
+      CopyFile(dockerFile, publishedDockerFile);
+
+      dockerImageName = GetDockerHubRepo();
+      dockerImageFullName = dockerImageName + ":" + gitVersion.MajorMinorPatch;
+
+      var settings = new DockerBuildSettings
+      {
+        Tag = new[] { dockerImageName, dockerImageFullName },
+        ForceRm = true,
+        Pull = true
+      };
+
+      DockerBuild(settings, "./publish/PullRequestsViewer.WebApp/lib");
     });
 
+Task("PushContainer")
+  .Description("Pushes the container with the Web Application")
+  .IsDependentOn("CreateContainer")
+  .Does(() => {
+    Verbose("Pushing '" + dockerImageName + "'");
+
+    var pushSettings = new DockerPushSettings
+    {
+      DisableContentTrust = false
+    };
+
+    DockerPush(pushSettings, dockerImageName);
+
+    Verbose("Pushing '" + dockerImageFullName + "'");
+
+    DockerPush(pushSettings, dockerImageFullName);
+  });
+
 Task("Test")
-    .IsDependentOn("Unit-Test")
-    .IsDependentOn("Acceptance-Test");
-	
+    .IsDependentOn("Unit-Tests")
+    .IsDependentOn("Acceptance-Tests");
+
 Task("Build+Test")
     .IsDependentOn("Build")
     .IsDependentOn("Test");
@@ -203,8 +264,7 @@ Task("Rebuild")
 Task("Default")
     .Description("This is the default task which will be ran if no specific target is passed in.")
     .IsDependentOn("Rebuild")
-    .IsDependentOn("Test")
-    .IsDependentOn("Package");
+    .IsDependentOn("Test");
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION

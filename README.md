@@ -11,8 +11,16 @@ These instructions will get you a copy of the project up and run on your local m
 Before running the project, you will need:
 
 * [.NET Core 2.0 SDK][dotnet-sdk]
+* [Docker][docker]
 
-### Installing
+### Installing as container (Docker)
+
+1. Open the terminal/command line
+2. Execute the command `docker run -d -p 8000:80 joaoasrosa/pullrequestsviewer`
+3. Open the browser and type `http://localhost:8000`
+
+
+### Installing as application
 
 1. Download the latest version from [here][latest-release]
 2. Unzip the downloaded file to a directory
@@ -24,11 +32,12 @@ Alternatively, you can deploy the application on a web server.
 
 ## Built With
 
-* [.NET Core 2.0][dotnet] - The Framework 
+* [.NET Core 2.0][dotnet] - The Framework
 * [SQLite][sqlite] - Data Persistence
 * [NuGet][nuget] - Dependency Management
 * [Cake][cake] - Cross Platform Build Automation System
 * [AppVeyor][appveyor] - Continuous Integration & Delivery Service
+* [Docker][docker] - Container Platform
 
 ## Contributing
 
@@ -36,7 +45,7 @@ Please read [CONTRIBUTING.md][contributing] for details on our code of conduct, 
 
 ## Versioning
 
-We use [SemVer][semver] for versioning. For the versions available, see the [tags on this repository][tags]. 
+We use [SemVer][semver] for versioning. For the versions available, see the [tags on this repository][tags].
 
 ## Authors
 
@@ -49,6 +58,7 @@ See also the list of [contributors][contributors] who participated in this proje
 This project is licensed under the MIT License - see the [LICENSE][license] file for details
 
 [dotnet-sdk]: https://www.microsoft.com/net/core/preview
+[docker]: https://www.docker.com/
 [latest-release]: https://github.com/joaoasrosa/pullrequests-viewer/releases
 [dotnet]: https://www.microsoft.com/net/
 [sqlite]: https://www.sqlite.org/
