@@ -2,6 +2,8 @@
 
 This project aims developers, who struggle to manage the PR's from several repos. When we work as a team, it's normal to stack some PR's, and sometimes we lost track of it. The Pull Requests Viewer allows a holistic view over the *open* PR's for the selected repos.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/1is7xrovhnau8l0u?svg=true)](https://ci.appveyor.com/project/joaoasrosa/pullrequests-viewer)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and run on your local machine.
