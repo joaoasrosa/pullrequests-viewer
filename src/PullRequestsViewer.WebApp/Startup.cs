@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PullRequestsViewer.GitHub.Bootstrap;
 using PullRequestsViewer.SqlLite.Bootstrap;
+using PullRequestsViewer.WebApp.Extensions;
 using Serilog;
 
 namespace PullRequestsViewer.WebApp
@@ -39,6 +40,8 @@ namespace PullRequestsViewer.WebApp
             }
 
             app.UseStaticFiles();
+
+            app.UseErrorLogging();
 
             app.UseMvc(routes =>
             {

@@ -14,6 +14,7 @@ namespace PullRequestsViewer.GitHub.Tests
         private readonly Mock<IRepositoriesClient> _repositoriesClientMock;
         private readonly Mock<ICredentialsRepository> _credentialsRepositoryMock;
         private readonly RepositoryRepository _sut;
+        private readonly Domain.User _user;
 
         public RepositoryRepositoryTests()
         {
@@ -22,7 +23,8 @@ namespace PullRequestsViewer.GitHub.Tests
             gitHubClientMock.SetupGet(x => x.Repository).Returns(_repositoriesClientMock.Object);
 
             _credentialsRepositoryMock = new Mock<ICredentialsRepository>();
-            _credentialsRepositoryMock.SetupGet(x=>x.User).Returns(UserBuilder.GenerateValidUser());
+            _user = UserBuilder.GenerateValidUser();
+            _credentialsRepositoryMock.SetupGet(x=>x.User).Returns(_user);
 
             _sut = new RepositoryRepository(gitHubClientMock.Object, _credentialsRepositoryMock.Object);
         }
@@ -64,7 +66,7 @@ namespace PullRequestsViewer.GitHub.Tests
         {
             await _sut.GetAllForCurrentAsync();
 
-            _repositoriesClientMock.Verify(x => x.GetAllForUser(_credentialsRepositoryMock.Object.User.Username), Times.Once);
+            _repositoriesClientMock.Verify(x => x.GetAllForUser(_user.Username), Times.Once);
         }
 
         [Fact]

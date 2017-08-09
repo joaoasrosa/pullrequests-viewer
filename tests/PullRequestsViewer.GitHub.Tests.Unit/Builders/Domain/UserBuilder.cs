@@ -6,11 +6,7 @@ namespace PullRequestsViewer.GitHub.Tests.Builders.Domain
     {
         internal static User GenerateValidUser()
         {
-            return new User
-                   {
-                       Username = "joaoasrosa",
-                       Password = "MagicWand!"
-                   };
+            return new User("joaoasrosa", "MagicWand!");
         }
     }
 }
