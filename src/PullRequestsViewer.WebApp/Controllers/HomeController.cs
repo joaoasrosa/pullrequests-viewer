@@ -62,18 +62,18 @@ namespace PullRequestsViewer.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(User user)
+        public IActionResult Login(UserViewModel user)
         {
             if (ModelState.IsValid)
             {
-                _credentialsRepository.SetUser(user);
+                _credentialsRepository.SetUser(user.ConvertTo());
                 return RedirectToAction("Index");
             }
             else
             {
-                // TODO: error message
+                ViewBag.Error = "Please input all fields.";
             }
-            return View();
+            return View(user);
         }
 
         public IActionResult About()

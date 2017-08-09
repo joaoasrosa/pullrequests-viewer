@@ -35,6 +35,7 @@ namespace PullRequestsViewer.WebApp
             }
             else
             {
+                // TODO middleware...
                 app.UseExceptionHandler("/Home/Error");
             }
 
