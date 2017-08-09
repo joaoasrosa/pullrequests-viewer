@@ -1,22 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Gist
- @joaoasrosa
- Sign out
- Watch 416
-  Star 2,190
- Fork 728 dotnet/cli
- Code  Issues 352  Pull requests 13  Projects 4  Wiki Insights 
-Branch: rel/1.0.0 Find file Copy pathcli/scripts/obtain/dotnet-install.ps1
-58b0566  on Dec 1, 2016
-@Thealexbarney Thealexbarney Add InstallDir to path if SDK version is already installed (#4843)
-11 contributors @piotrpMSFT @krwq @MichaelSimons @mendhak @eerhardt @Thealexbarney @MattGal @Sridhar-MS @rs38 @livarcocc @brthor
-RawBlameHistory     
-441 lines (367 sloc)  16.2 KB
 #
 # Copyright (c) .NET Foundation and contributors. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
