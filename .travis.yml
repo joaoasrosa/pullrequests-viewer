@@ -1,4 +1,6 @@
 language: csharp
-solution: PullRequestsViewer.sln
+mono: none
+dotnet: 2.0.0-preview2-006497
+dist: trusty
 script:
   - ./build.sh -c Release
