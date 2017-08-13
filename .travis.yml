@@ -3,4 +3,5 @@ mono: none
 dotnet: 2.0.0-preview2-006497
 dist: trusty
 script:
+  - dotnet --version
   - ./build.sh -c Release
