@@ -39,6 +39,7 @@ Alternatively, you can deploy the application on a web server.
 * [NuGet][nuget] - Dependency Management
 * [Cake][cake] - Cross Platform Build Automation System
 * [AppVeyor][appveyor] - Continuous Integration & Delivery Service
+* [TravisCI][travisci] - Continuous Integration Platform for GitHub
 * [Docker][docker] - Container Platform
 
 ## Contributing
@@ -67,6 +68,7 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [nuget]: https://www.nuget.org/
 [cake]: http://cakebuild.net/
 [appveyor]: https://www.appveyor.com/
+[travisci]: https://travis-ci.org/
 [contributing]: https://github.com/joaoasrosa/pullrequests-viewer/blob/master/CONTRIBUTING.md
 [semver]: http://semver.org/
 [tags]: https://github.com/joaoasrosa/pullrequests-viewer/tags
