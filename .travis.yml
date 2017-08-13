@@ -1,0 +1,4 @@
+language: csharp
+solution: PullRequestsViewer.sln
+script:
+  - ./build.sh -c Release
