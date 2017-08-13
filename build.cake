@@ -105,6 +105,7 @@ Task("GitVersion")
     .Description("Set the SemVer to the solution.")
     .Does(() =>
 	{
+	try{
 		gitVersion = GitVersion(new GitVersionSettings {
 			UpdateAssemblyInfo = true
 		});
@@ -116,6 +117,8 @@ Task("GitVersion")
 
 		Verbose("Full SemVer: " + gitVersion.FullSemVer);
 		Verbose("Major Minor Patch: " + gitVersion.MajorMinorPatch);
+		}
+		catch(Exception ex){Verbose(ex.Message);}
 	});
 
 Task("Build")
