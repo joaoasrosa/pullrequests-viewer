@@ -105,20 +105,25 @@ Task("GitVersion")
     .Description("Set the SemVer to the solution.")
     .Does(() =>
 	{
-	try{
-		gitVersion = GitVersion(new GitVersionSettings {
-			UpdateAssemblyInfo = true
-		});
+		try
+		{
+			gitVersion = GitVersion(new GitVersionSettings {
+				UpdateAssemblyInfo = true
+			});
 
-	    var file = File(projectPath);
-	    XmlPoke(file, "/Project/PropertyGroup/AssemblyVersion", gitVersion.MajorMinorPatch);
-		XmlPoke(file, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
-		XmlPoke(file, "/Project/PropertyGroup/Version", gitVersion.FullSemVer);
+			var file = File(projectPath);
+			XmlPoke(file, "/Project/PropertyGroup/AssemblyVersion", gitVersion.MajorMinorPatch);
+			XmlPoke(file, "/Project/PropertyGroup/FileVersion", gitVersion.MajorMinorPatch);
+			XmlPoke(file, "/Project/PropertyGroup/Version", gitVersion.FullSemVer);
 
-		Verbose("Full SemVer: " + gitVersion.FullSemVer);
-		Verbose("Major Minor Patch: " + gitVersion.MajorMinorPatch);
+			Verbose("Full SemVer: " + gitVersion.FullSemVer);
+			Verbose("Major Minor Patch: " + gitVersion.MajorMinorPatch);
 		}
-		catch(Exception ex){Verbose(ex.Message);}
+		catch(Exception ex)
+		{
+			// TODO: Travis CI fail here. Perhaps Cake problems. Investigate later.
+			Verbose(ex.Message);
+		}
 	});
 
 Task("Build")
